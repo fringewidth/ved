@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@1&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --bgcolor: #000000;
+  --sccolor: #171717;
+  --stylecolor1: #BDD0D1;
+  --stylecolor2: #808FC5;
+  --font: Poppins;
+}
+
+
+body{
+  margin: 0;
+  padding: 0;
+  background: var(--bgcolor);
+}
+
+
+.button{
+  /* layout */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.525rem;
+  padding: 0.535rem 0.875rem;
+
+  /* style */
+  border-radius: 0.75rem;
+  background: linear-gradient(76deg, var(--stylecolor1) -53.13%, var(--stylecolor2) 93.32%);
+  border: 0rem;
+
+  /* text */
+  color: var(--bgcolor);
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+
