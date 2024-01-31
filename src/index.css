@@ -2,20 +2,22 @@
 
 :root{
   --bgcolor: #000000;
-  --inversebg: #ffffff;
+  --contentcolor: #ffffff;
   --sccolor: #171717;
   --stylecolor1: #BDD0D1;
   --stylecolor2: #808FC5;
   --font: Poppins;
-  --fontsize: 1.0625rem;
 }
 
+*{
+  font-family: var(--font);
+  color: var(--contentcolor);
+}
 
 body{
   margin: 0;
   padding: 0;
   background: var(--bgcolor);
-  font-family: var(--font);
 }
 
 
@@ -33,7 +35,7 @@ body{
 
   /* text */
   color: var(--bgcolor);
-  font-size: var(--fontsize);
+  font-size: 1.0625rem;;
   font-weight: 600;
 }
 
@@ -52,7 +54,7 @@ body{
   background-color: var(--sccolor);
 }
 .searchbar:focus-within{
-  outline: 0.1rem solid var(--inversebg);
+  outline: 0.1rem solid var(--contentcolor);
 }
 
 .searchicon{
@@ -67,13 +69,10 @@ body{
   /* style */
   background-color: transparent;
   border: 0rem;
-  caret-color: var(--inversebg);
-  font-size: var(--fontsize);
-  font-family: var(--font);
-  color: var(--inversebg);
+  caret-color: var(--contentcolor);
+  font-size: 1.0625rem;;
 }
 .searchinput::placeholder{
-  font-family: var(--font);
   font-weight: 300;
 }
 
@@ -83,3 +82,25 @@ body{
 }
 
 
+.logo{
+  display: inline-flex;
+  width: 8.1875rem;
+  height: 3.3125rem;
+  gap: 0.44rem;
+  align-items: center;
+}
+
+.logoimage{
+  width: 2.8125rem;
+  height: 2.8125rem;
+}
+
+.logotext{
+  /* layout */
+  width: 4.9375rem;
+  height: 3.3125rem;
+
+  /* typgraphy */
+  font-size: 2.1875rem;
+  font-weight: 600;
+}

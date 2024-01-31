@@ -1,6 +1,6 @@
 import React from "react";
-import SearchBar from "./Components/SearchBar.jsx";
+import Logo from "./Components/Logo.jsx";
 
 export default function App() {
-  return <SearchBar />;
+  return <Logo />;
 }
