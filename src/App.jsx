@@ -1,6 +1,6 @@
 import React from "react";
-import Logo from "./Components/Logo.jsx";
+import NavBar from "./Components/NavBar.jsx";
 
 export default function App() {
-  return <Logo />;
+  return <NavBar />;
 }
