@@ -2,10 +2,12 @@
 
 :root{
   --bgcolor: #000000;
+  --inversebg: #ffffff;
   --sccolor: #171717;
   --stylecolor1: #BDD0D1;
   --stylecolor2: #808FC5;
   --font: Poppins;
+  --fontsize: 1.0625rem;
 }
 
 
@@ -13,6 +15,7 @@ body{
   margin: 0;
   padding: 0;
   background: var(--bgcolor);
+  font-family: var(--font);
 }
 
 
@@ -30,8 +33,53 @@ body{
 
   /* text */
   color: var(--bgcolor);
-  font-size: 1.0625rem;
+  font-size: var(--fontsize);
   font-weight: 600;
+}
+
+
+.searchbar{
+  /* layout */
+  display: inline-flex;
+  padding: 0.625rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8125rem;
+
+  /* style */
+  border: none;
+  border-radius: 5rem;
+  background-color: var(--sccolor);
+}
+.searchbar:focus-within{
+  outline: 0.1rem solid var(--inversebg);
+}
+
+.searchicon{
+  width:1.5rem;
+  height:1.5rem;
+}
+
+.searchinput{
+  /* layout */
+  width: 17rem;
+
+  /* style */
+  background-color: transparent;
+  border: 0rem;
+  caret-color: var(--inversebg);
+  font-size: var(--fontsize);
+  font-family: var(--font);
+  color: var(--inversebg);
+}
+.searchinput::placeholder{
+  font-family: var(--font);
+  font-weight: 300;
+}
+
+.searchinput:focus{
+  outline: none;
+  border: none;
 }
 
 
