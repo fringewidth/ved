@@ -1,6 +1,12 @@
 import React from "react";
 import NavBar from "./Components/NavBar.jsx";
+import HeroContent from "./Components/HeroContent.jsx";
 
 export default function App() {
-  return <NavBar />;
+  return (
+    <div>
+      <NavBar />
+      <HeroContent className="herocontent" />
+    </div>
+  );
 }

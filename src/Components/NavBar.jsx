@@ -8,7 +8,10 @@ export default function NavBar(props) {
     <div className="navbar">
       <Logo></Logo>
       <SearchBar></SearchBar>
-      <Button children={["Sign Up"]}></Button>
+      <div className="buttongroup">
+        <Button children={["Log in"]}></Button>
+        <Button children={["Sign up"]}></Button>
+      </div>
     </div>
   );
 }

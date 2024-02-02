@@ -21,13 +21,64 @@ body{
 }
 
 
+.herocontent video{
+  object-fit: cover;
+  height: 130vh;
+  /* position: absolute;
+  left: 8vw;
+  top: -8vh;
+  z-index: -1; */
+}
+
+.herotext{
+  /* layout */
+  /* width: auto;
+  position: relative;
+  left: 53vw;
+  bottom: 55vh; */
+  
+  /* text */
+  color: var(--stylecolor1);
+  font-weight: 600; 
+}
+
+.herotext>:first-child{
+  /* layout */
+  /* margin: 0; */
+
+  /* text */
+  color: inherit;
+  font-size: 2.8vw;
+}
+
+.herotext>:first-child span, .specialtext{
+  color: linear-gradient(266deg, var(--stylecolor1) 17.92%, var(--stylecolor2) 53.68%) !important;
+  font-size: 3.8vw;
+}
+
+.herotext>:first-child ~ p{
+  /* layout */
+  /* margin-top: -0.5vh;
+  margin-left: 7vw;
+  margin-bottom: 0; */
+  
+  /* text */
+  color: inherit;
+  font-size: 1.85vw;
+}
+
+.buttongroup{
+  width: auto;
+  display: flex;
+  gap: 0.7rem;
+  margin-right: 1.93rem;
+}
 .button{
   /* layout */
   display: inline-flex;
   align-items: center;
   gap: 0.525rem;
   padding: 0.375rem 0.875rem;
-  margin-right: 1.93rem;
 
   /* style */
   border-radius: 0.75rem;
@@ -35,7 +86,7 @@ body{
   border: 0rem;
 
   /* text */
-  color: var(--bgcolor) !important;
+  color: var(--bgcolor);
   font-size: 1.0625rem;
   font-weight: 600;
 }
@@ -104,7 +155,7 @@ body{
   width: 4.9375rem;
   height: 3.3125rem;
 
-  /* typgraphy */
+  /* text */
   font-size: 2.1875rem;
   font-weight: 600;
 }
@@ -115,4 +166,9 @@ body{
   align-items: center;
   padding: 0.75rem 0;
   box-shadow: 0px 4px 6.7px -2px rgba(86, 86, 86, 0.334);
+}
+
+.herocontent{
+  width: 100%;
+  height: 2;
 }
