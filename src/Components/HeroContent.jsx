@@ -3,7 +3,7 @@ import VideoScroll from "./VideoScroll";
 
 export default function HeroContent() {
   return (
-    <div className="herovideo">
+    <div className="herocontent">
       <VideoScroll src="src/assets/video/vedas-opening.mp4" />
       <div className="herotext">
         <p>
