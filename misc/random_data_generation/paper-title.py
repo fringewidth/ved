@@ -5,6 +5,7 @@ import json
 import os
 import openpyxl
 import re
+import time
 
 def askMistral(prompt):
     response = requests.post(
@@ -19,16 +20,26 @@ def askMistral(prompt):
     ]
   })
 )
-    return response.json()["choices"][0]["message"]["content"]
+    try:
+      return response.json()["choices"][0]["message"]["content"]
+    except KeyError:
+       return 0
 
 
 def generate_paper(project_title, field):
-    title = askMistral(f"what would the title of a paper for a research project called \"{project_title}\" in the field {field} be? Be creative and realistic. Generate a single title")
-    abstract = askMistral(f"Generate an abstract for a paper entitled '{title}'. Generate nothing else.")
-    doi = generate_doi()
-    url = generate_url(doi)
-    citations = generate_citations(title)
-    return [project_title, title, abstract, doi, url, citations]
+  while True:
+    time.sleep(15)
+    ans = askMistral(f"Generate a single paper's title and abstract for a project entitled \"{project_title}\". Format it as Title: [title] Abstract: [Abstract]")
+    if ans!=0:
+       print('Error. Retrying...')
+       break
+  print(ans)
+  title = re.findall(r'Title:(.*)\n?', ans)[0]
+  abstract = re.findall(r'Abstract:\s+(.*)\n?', ans)[0]
+  doi = generate_doi()
+  url = generate_url(doi)
+  citations = generate_citations(title)
+  return [project_title, title, abstract, doi, url, citations]
 
 def generate_doi():
   return f"10.1111/{''.join([random.choice('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ') for i in range(11)])}"
@@ -45,11 +56,16 @@ src_ws = openpyxl.load_workbook(filePath).active
 dest_wb = openpyxl.Workbook()
 dest_ws = dest_wb.active
 
-for i in range(2, src_ws.max_row + 1):
+for i in range(2, src_ws.max_row+1):
    proj_title = src_ws.cell(row=i, column=1).value
    proj_field = src_ws.cell(row=i, column=3).value
+   print(f"Generating for project {proj_title}...")
    for j in range(random.randint(1,3)):
-      dest_ws.append(generate_paper(proj_title, proj_field))
-
-
+      print(f"\tGenerating paper {j+1}...")
+      ws_row = generate_paper(proj_title, proj_field)
+      if not ws_row:
+          continue
+      print(f"\tGeneration Complete. Paper entitled {ws_row[1]} generated.")
+      dest_ws.append(ws_row)
+      dest_wb.save("D:\papers2.xlsx")
 
