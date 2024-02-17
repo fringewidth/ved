@@ -27,11 +27,13 @@ def askMistral(prompt):
 
 
 def generate_paper(project_title, field):
+  interval = 1
   while True:
-    time.sleep(15)
+    time.sleep(interval)
     ans = askMistral(f"Generate a single paper's title and abstract for a project entitled \"{project_title}\". Format it as Title: [title] Abstract: [Abstract]")
     if ans!=0:
        print('Error. Retrying...')
+       interval *= 2
        break
   print(ans)
   title = re.findall(r'Title:(.*)\n?', ans)[0]
@@ -50,13 +52,13 @@ def generate_url(doi):
 def generate_citations(title):
    return max(0, int(np.random.normal(loc=150, scale=100)) + 5*len(title) + np.random.randint(10, 50) * np.random.randint(-1,1))
 
-filePath = "D:\projects.xlsx"
-src_ws = openpyxl.load_workbook(filePath).active
-
+srcfilePath = "D:\projects.xlsx"
+src_ws = openpyxl.load_workbook(srcfilePath).active
+destfilePath = "D:\papers.xlsx"
 dest_wb = openpyxl.Workbook()
 dest_ws = dest_wb.active
 
-for i in range(2, src_ws.max_row+1):
+for i in range(26, src_ws.max_row+1):
    proj_title = src_ws.cell(row=i, column=1).value
    proj_field = src_ws.cell(row=i, column=3).value
    print(f"Generating for project {proj_title}...")
@@ -67,5 +69,5 @@ for i in range(2, src_ws.max_row+1):
           continue
       print(f"\tGeneration Complete. Paper entitled {ws_row[1]} generated.")
       dest_ws.append(ws_row)
-      dest_wb.save("D:\papers2.xlsx")
+      dest_wb.save(destfilePath)
 
