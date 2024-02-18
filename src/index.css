@@ -7,6 +7,9 @@
   --stylecolor1: #BDD0D1;
   --stylecolor2: #808FC5;
   --font: Poppins;
+  --stdmargin-left: 2.25rem;
+  --listcolor: rgba(217, 217, 217, 0.10);
+  --listcontentcolor: #B9B9B9;
 }
 
 *{
@@ -22,7 +25,7 @@ body{
 
 .herocontent{
   width: 100%;
-  height: 130vh;
+  height: 110vh;
   position: relative;
   bottom: 10vh;
   z-index: -1;
@@ -174,4 +177,65 @@ body{
   align-items: center;
   padding: 0.75rem 0;
   box-shadow: 0px 4px 6.7px -2px rgba(86, 86, 86, 0.334);
+}
+
+h1{
+  /* layout */
+  margin-left: var(--stdmargin-left);
+
+  /* typography */
+  color: #E8E8E8;
+  font-family: Poppins;
+  font-size: 2.25rem;
+  font-weight: 500;
+}
+
+.horlist {
+  /* layout */
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  padding-left: var(--stdmargin-left);
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+.horlist::-webkit-scrollbar {
+  display: none;
+}
+
+.horlistitem {
+  /* layout */
+  flex: 0 0 25rem;
+  margin-right: 0.5rem;
+
+  /* style */
+  border-radius: 1.5rem;
+  background: var(--listcolor);
+
+}
+
+.horlistitem{
+  /* layout */
+  display: inline-flex;
+  flex-direction: column;
+  padding: 1.2rem 1.4rem;
+  align-items: flex-start;
+  gap: 0.375rem 0.4375rem;
+  flex-wrap: wrap;
+
+  /* style */
+  border-radius: 2rem;
+  background: var(--listcolor);
+}
+
+.horitemtitle{
+  color: #FFF;
+  font-size: 1.1875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.horitemtitle ~ div, p{
+  color: var(--listcontentcolor)
 }

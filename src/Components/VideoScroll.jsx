@@ -13,7 +13,6 @@ export default function VideoScroll(props) {
         window.innerHeight / 2;
       const scrolledHeight = window.scrollY;
       const timeToSeek = (duration * scrolledHeight) / triggerFull;
-      console.log(timeToSeek);
       if (videoRef.current.currentTime != triggerFull) {
         videoRef.current.currentTime = timeToSeek;
         videoRef.current.pause();
