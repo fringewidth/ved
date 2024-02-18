@@ -70,4 +70,3 @@ for i in range(26, src_ws.max_row+1):
       print(f"\tGeneration Complete. Paper entitled {ws_row[1]} generated.")
       dest_ws.append(ws_row)
       dest_wb.save(destfilePath)
-
