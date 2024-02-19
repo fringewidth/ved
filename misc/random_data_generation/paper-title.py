@@ -34,6 +34,7 @@ def generate_paper(project_title, field):
     if ans!=0:
        print('Error. Retrying...')
        interval *= 2
+    else:
        break
   print(ans)
   title = re.findall(r'Title:(.*)\n?', ans)[0]
