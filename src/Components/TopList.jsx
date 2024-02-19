@@ -1,4 +1,5 @@
 //Sorts by citations and returns top objects. Objects specified by props.
+//Props: count: number of elements, table: table to query, header, fields to display
 
 import React from "react";
 import HorizontalList from "./HorizontalList.jsx";
@@ -17,8 +18,8 @@ export default function TopProjects(props) {
 
   const getItems = async () => {
     const { data, error } = await supabase
-      .from("top_projects")
-      .select()
+      .from(props.table)
+      .select(props.fields)
       .order("citations", { ascending: false })
       .limit(props.count);
     if (error) console.log(error);
@@ -26,7 +27,7 @@ export default function TopProjects(props) {
   };
   return (
     <div>
-      <h1>Top Projects</h1>
+      <h1>{props.header}</h1>
       <HorizontalList items={items} />
     </div>
   );
