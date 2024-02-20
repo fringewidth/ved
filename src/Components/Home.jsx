@@ -8,7 +8,7 @@ export default function Home() {
   const list_count = 6;
   return (
     <div>
-      <NavBar buttons={[["Log in"], ["Sign Up"]]} />
+      <NavBar />
       <HeroContent />
       <TopList
         count={list_count}
