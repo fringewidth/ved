@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import NavBar from "./NavBar";
 import TopList from "./TopList.jsx";
 import Field from "./Field.jsx";
 import calendar from "../assets/svg/calendar.svg";
 import pin from "../assets/svg/pin.svg";
 import { createClient } from "@supabase/supabase-js/";
+import UserProjects from "./UserProjects.jsx";
 
 const supabaseUrl = "https://txouxmylhwoxcyciynby.supabase.co";
 const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default function UserPage() {
-  const [items, setItems] = useState([]);
+  const [data, setData] = useState([]);
+  const { username } = useParams();
 
   useEffect(() => {
     getItems();
@@ -24,34 +27,30 @@ export default function UserPage() {
         .select(
           "full_name, affiliation, bio, city, yoe, publications, citations, active_projects, fields"
         )
-        .eq("username", "julia_estevez");
-      setItems(data);
+        .eq("username", username);
+      setData(data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log(items);
-
   const list_count = 6;
   const icons = [pin, calendar, null, null, null];
   const content =
-    items.length > 0
+    data.length > 0
       ? [
-          `${items[0].city}`,
-          `${items[0].yoe} ${
-            items[0].yoe === 1 ? "year" : "years"
+          `${data[0].city}`,
+          `${data[0].yoe} ${
+            data[0].yoe === 1 ? "year" : "years"
           } of experience`,
-          `${items[0].publications} ${
-            items[0].publications === 1 ? "publication" : "publications"
+          `${data[0].publications} ${
+            data[0].publications === 1 ? "publication" : "publications"
           }`,
-          `Cited ${items[0].citations} ${
-            items[0].citations === 1 ? "time" : "times"
+          `Cited ${data[0].citations} ${
+            data[0].citations === 1 ? "time" : "times"
           }`,
-          `${items[0].active_projects} ${
-            items[0].active_projects === 1
-              ? "active project"
-              : "active projects"
+          `${data[0].active_projects} ${
+            data[0].active_projects === 1 ? "active project" : "active projects"
           }`,
         ]
       : ["", "", "", "", ""];
@@ -62,8 +61,8 @@ export default function UserPage() {
     </div>
   ));
   const fields =
-    items.length > 0
-      ? items[0].fields
+    data.length > 0
+      ? data[0].fields
           .split(",")
           .map((field) => <Field field={field} key={field} />)
       : null;
@@ -74,27 +73,29 @@ export default function UserPage() {
       <div className="userdata">
         <div className="userdatamain">
           <div className="userfullname">
-            {items.length ? items[0].full_name : 0}
+            {data.length ? data[0].full_name : 0}
           </div>
           <div className="useraffl">
-            {items.length > 0 ? items[0].affiliation : ""}
+            {data.length > 0 ? data[0].affiliation : ""}
           </div>
-          <div className="userbio">{items.length > 0 ? items[0].bio : ""}</div>
+          <div className="userbio">{data.length > 0 ? data[0].bio : ""}</div>
           <div className="userfields">{fields}</div>
         </div>
         <div className="userdataother">{otherdata}</div>
       </div>
-      <TopList
-        count={list_count}
-        table="top_projects"
+      <UserProjects
+        context="project"
+        table="user_projects"
         header="Projects"
         fields="project_id, title, description, citations, field"
+        username={username}
       />
-      <TopList
-        count={list_count}
-        table="top_publications"
+      <UserProjects
+        context="publication"
+        table="user_publications"
         header="Papers"
         fields="publication_id, title, authors, abstract, citations, journal"
+        username={username}
       />
     </>
   );

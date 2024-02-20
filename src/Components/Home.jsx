@@ -12,18 +12,21 @@ export default function Home() {
       <HeroContent />
       <TopList
         count={list_count}
+        context="project"
         table="top_projects"
         header="Top Projects"
         fields="project_id, title, description, citations, field"
       />
       <TopList
         count={list_count}
+        context="publication"
         table="top_publications"
         header="Top Publications"
         fields="publication_id, title, authors, abstract, citations, journal"
       />
       <TopList
         count={list_count}
+        context="user"
         table="top_researchers"
         header="Top Researchers"
         fields="username, full_name, citations, affiliation"

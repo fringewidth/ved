@@ -28,7 +28,7 @@ export default function TopProjects(props) {
   return (
     <div>
       <h1>{props.header}</h1>
-      <HorizontalList items={items} />
+      <HorizontalList context={props.context} items={items} />
     </div>
   );
 }

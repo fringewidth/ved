@@ -2,11 +2,12 @@
 //Second item will be rendered as a header
 //Last item will be rendered with a colored circle TODO
 import React from "react";
+import { Link } from "react-router-dom";
 import Field from "./Field";
 
 export default function HorizontalListItem(props) {
   const entries = Object.entries(props.item); //Converts object to array of arrays as [..[key,value]..]
-  const [, [, title], ...rest] = entries; //extract only the values, group into title and rest
+  const [[, id], [, title], ...rest] = entries; //extract only the values, group into title and rest
   const [, field] = rest.pop(); //rest contains [...field, citations] which are to be rendered separately
   const [, citations] = rest.pop();
   const normalText = rest.map(([, value]) => {
@@ -17,11 +18,13 @@ export default function HorizontalListItem(props) {
   });
 
   return (
-    <li class="horlistitem">
-      <div class="horitemtitle">{title}</div>
-      <div>{normalText}</div>
-      <div>Cited {citations} times</div>
-      <Field field={field} />
-    </li>
+    <Link to={`/${props.context}/:${id}`}>
+      <li class="horlistitem">
+        <div class="horitemtitle">{title}</div>
+        <div>{normalText}</div>
+        <div>Cited {citations} times</div>
+        <Field field={field} />
+      </li>
+    </Link>
   );
 }
