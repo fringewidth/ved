@@ -1,14 +1,17 @@
 import React from "react";
-import NavBar from "./Components/NavBar.jsx";
-import HeroContent from "./Components/HeroContent.jsx";
-import TopProjects from "./Components/TopProjects.jsx";
+import { Routes, Route } from "react-router-dom";
+import Home from "./Components/Home";
+import Authenticate from "./Components/Authenticate";
+import UserPage from "./Components/UserPage";
 
 export default function App() {
   return (
-    <div>
-      <NavBar />
-      <HeroContent />
-      <TopProjects count="5" />
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/authenticate/:authtype" element={<Authenticate />} />
+        <Route path="/user" element={<UserPage />} />
+      </Routes>
+    </>
   );
 }
