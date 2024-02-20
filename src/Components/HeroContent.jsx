@@ -4,7 +4,7 @@ import VideoScroll from "./VideoScroll";
 export default function HeroContent() {
   const containerRef = useRef(null);
   return (
-    <div className="herocontent" ref={containerRef}>
+    <div class="herocontent" ref={containerRef}>
       <VideoScroll
         src="src/assets/video/vedas-opening.mp4"
         parentRef={containerRef}
