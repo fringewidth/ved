@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "./NavBar";
-import TopList from "./TopList.jsx";
-import Field from "./Field.jsx";
+import Field from "./Field";
 import calendar from "../assets/svg/calendar.svg";
 import pin from "../assets/svg/pin.svg";
 import { createClient } from "@supabase/supabase-js/";
-import UserProjects from "./UserProjects.jsx";
+import UserList from "./UserList";
 
 const supabaseUrl = "https://txouxmylhwoxcyciynby.supabase.co";
 const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
@@ -21,15 +20,14 @@ export default function UserPage() {
   }, []);
 
   const getItems = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("user_page")
-        .select(
-          "full_name, affiliation, bio, city, yoe, publications, citations, active_projects, fields"
-        )
-        .eq("username", username);
-      setData(data);
-    } catch (error) {
+    const { data, error } = await supabase
+      .from("user_page")
+      .select(
+        "full_name, affiliation, bio, city, yoe, publications, citations, active_projects, fields"
+      )
+      .eq("username", username.slice(1));
+    setData(data);
+    if (error) {
       console.log(error);
     }
   };
@@ -54,12 +52,14 @@ export default function UserPage() {
           }`,
         ]
       : ["", "", "", "", ""];
+
   const otherdata = icons.map((icon, index) => (
     <div key={index} className="userdetails">
       {icon && <img className="detailsicon" src={icon} alt="" />}
       <span className="detailscontent">{content[index]}</span>
     </div>
   ));
+
   const fields =
     data.length > 0
       ? data[0].fields
@@ -83,19 +83,19 @@ export default function UserPage() {
         </div>
         <div className="userdataother">{otherdata}</div>
       </div>
-      <UserProjects
-        context="project"
+      <UserList
         table="user_projects"
         header="Projects"
         fields="project_id, title, description, citations, field"
-        username={username}
+        username={username.slice(1)}
+        context="project"
       />
-      <UserProjects
-        context="publication"
+      <UserList
         table="user_publications"
         header="Papers"
         fields="publication_id, title, authors, abstract, citations, journal"
-        username={username}
+        username={username.slice(1)}
+        context="publication"
       />
     </>
   );

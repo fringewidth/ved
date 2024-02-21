@@ -6,7 +6,7 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 import { useState, useEffect } from "react";
 
-export default function UserProjects(props) {
+export default function UserList(props) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {

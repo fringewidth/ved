@@ -18,8 +18,8 @@ export default function HorizontalListItem(props) {
   });
 
   return (
-    <Link to={`/${props.context}/:${id}`}>
-      <li class="horlistitem">
+    <Link to={`/${props.context}/:${id}`} class="horlistitem">
+      <li>
         <div class="horitemtitle">{title}</div>
         <div>{normalText}</div>
         <div>Cited {citations} times</div>
