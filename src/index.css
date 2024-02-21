@@ -549,3 +549,63 @@ li>.projauthorisadmin{
   background: var(--button2color);
   color: var(--contentcolor)
 }
+
+.paperdetails, .journaldetails{
+  border-radius: 1.75rem;
+  background: var(--listcolor);
+  padding: 2rem;
+}
+
+.paperdetails{
+  flex: 1 1 57%;
+}
+
+.journaldetails{
+  flex: 1 1 34%;
+}
+
+.pubdetails{
+  display: flex;
+  gap: 2.2%;
+  justify-content:  space-around;
+  margin: 3.37rem 2rem;
+}
+
+.paperdetails>h1{
+  margin: 0;
+}
+
+.paperdetails>h1 ~ *{
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--contentcolor)
+}
+
+.publication-page-link{
+  color:  #BFD2FF;
+  text-decoration: underline;
+  display: flex;
+  align-items: center;
+}
+.publication::after{
+  color:  #BFD2FF;
+  text-decoration: underline;
+}
+
+.journaldetails *{
+  font-size: 1.125rem;
+}
+
+.journallinks>p{
+  font-weight: 500;
+  color: var(--contentcolor);
+  padding-bottom: 2.38rem;
+  border-bottom: 0.01rem solid rgba(255, 255, 255, 0.32);
+}
+
+.journalinfo>h1{
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

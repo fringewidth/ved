@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Button from "./Button";
 import document from "../assets/svg/document.svg";
 import info from "../assets/svg/info.svg";
+import link from "../assets/svg/link.svg";
 
 const supabaseUrl = "https://txouxmylhwoxcyciynby.supabase.co";
 const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
@@ -51,7 +52,11 @@ export default function PublicationPage() {
 
   const userList = users.map((user, index) => (
     <span style={{ color: "white" }}>
-      <Link to={`/user/:${user[0].username}`} key={index}>
+      <Link
+        class="publication-page-link"
+        to={`/user/:${user[0].username}`}
+        key={index}
+      >
         {user[0].first_name + " " + user[0].last_name}
       </Link>
       {index !== users.length - 1 ? ", " : ""}
@@ -61,44 +66,63 @@ export default function PublicationPage() {
     return (
       <>
         <NavBar />
-        <div class="paperdetails">
-          <h1>{items[0].title}</h1>
-          {userList}
-          <p>
-            Part of the project{" "}
-            <Link to={`/project/:${items[0].project_id}`}>
-              {items[0].project_title}
-            </Link>
-            {"  "}|{"  "} Cited {items[0].citations_count}{" "}
-            {items[0].citations_count === 1 ? "time" : "times"}
-          </p>
-          <p>{items[0].doi}</p>
-          <p>{items[0].abstract}</p>
-        </div>
-        <div class="journaldetails">
-          <div class="journallinks">
-            <a href={items[0].url}>
-              <Button>
-                <img src={document} />
-                Go to Paper
-              </Button>
-            </a>
+        <div className="pubdetails">
+          <div class="paperdetails">
+            <h1>{items[0].title}</h1>
+            {userList}
             <p>
-              Appears on{" "}
-              <a href={items[0].journal_website_url}>{items[0].journal_name}</a>
+              Part of the project{" "}
+              <Link
+                class="publication-page-link"
+                to={`/project/:${items[0].project_id}`}
+              >
+                {items[0].project_title}
+              </Link>
+              {"  "}|{"  "} Cited {items[0].citations_count}{" "}
+              {items[0].citations_count === 1 ? "time" : "times"}
             </p>
+            <p>{items[0].doi}</p>
+            <p>{items[0].abstract}</p>
           </div>
-          <div className="journalinfo">
-            <h1>
-              <img src={info} /> Journal Info
-            </h1>
-            <p>ISSN: {items[0].issn}</p>
-            <p>Publisher: {items[0].publisher}</p>
-            <p>Impact Factor: {items[0].impact_factor}</p>
-            <p>Country: {items[0].country}</p>
-            <p>Language: {items[0].language}</p>
-            <p>Contact Email: {items[0].contact_email}</p>
-            <p>Review Process: {items[0].review_process}</p>
+          <div class="journaldetails">
+            <div class="journallinks">
+              <a href={items[0].url}>
+                <Button>
+                  <img src={document} />
+                  Go to Paper
+                </Button>
+              </a>
+              <p>
+                Appears on{" "}
+                <a
+                  class="publication-page-link"
+                  href={"https://" + items[0].journal_website_url}
+                >
+                  {items[0].journal_name}
+                  <img src={link} />
+                </a>
+              </p>
+            </div>
+            <div className="journalinfo">
+              <h1>
+                <img src={info} /> Journal Info
+              </h1>
+              <p>ISSN: {items[0].issn}</p>
+              <p>Publisher: {items[0].publisher}</p>
+              <p>Impact Factor: {items[0].impact_factor}</p>
+              <p>Country: {items[0].country}</p>
+              <p>Language: {items[0].language}</p>
+              <p>
+                Contact Email:{" "}
+                <a
+                  class="publication-page-link"
+                  href={`mailto:${items[0].contact_email}`}
+                >
+                  {items[0].contact_email}
+                </a>
+              </p>
+              <p>Review Process: {items[0].review_process}</p>
+            </div>
           </div>
         </div>
       </>
