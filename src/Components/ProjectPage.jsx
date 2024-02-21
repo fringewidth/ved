@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from "./NavBar";
 import Field from "./Field";
+import ProjectList from "./ProjectList";
 
 import { createClient } from "@supabase/supabase-js/";
 import { Link } from "react-router-dom";
@@ -52,7 +53,6 @@ export default function ProjectPage() {
       setUsers(userData);
     }
   };
-  console.log(users);
   const userList = users.map((user) => (
     <Link to={"/user/:" + user[0].username} class="link">
       <li>
@@ -90,6 +90,12 @@ export default function ProjectPage() {
           <ul>{userList}</ul>
         </div>
       </div>
+      <ProjectList
+        table="project_publications"
+        context="publication"
+        header="Papers"
+        project_id={project_id.slice(1)}
+      />
     </>
   );
 }
