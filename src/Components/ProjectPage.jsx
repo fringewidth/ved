@@ -2,15 +2,14 @@ import React from "react";
 import NavBar from "./NavBar";
 import Field from "./Field";
 import ProjectList from "./ProjectList";
-
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js/";
 import { Link } from "react-router-dom";
 
 const supabaseUrl = "https://txouxmylhwoxcyciynby.supabase.co";
 const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 
 export default function ProjectPage() {
   const { project_id } = useParams();
