@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./Components/Home";
 import Authenticate from "./Components/Authenticate";
 import UserPage from "./Components/UserPage";
+import ProjectPage from "./Components/ProjectPage";
 
 export default function App() {
   return (
@@ -11,7 +12,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/authenticate/:authtype" element={<Authenticate />} />
         <Route path="/user/:username" element={<UserPage />} />
-        {/* <Route path="/project" element={<ProjectPage />} /> */}
+        <Route path="/project/:project_id" element={<ProjectPage />} />
       </Routes>
     </>
   );

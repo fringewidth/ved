@@ -10,6 +10,7 @@
   --listcolor: rgba(217, 217, 217, 0.10);
   --listcolorhover: rgba(217, 217, 217, 0.20);
   --listcontentcolor: #B9B9B9;
+  --activecolor: #bdd0d1;
 }
 
 @keyframes movegrad {
@@ -73,7 +74,6 @@ body{
 
 .herotext>:first-child span, .specialtext{
   font-weight: 600;
-  color: linear-gradient() !important;
   font-size: 3.8vw;
   background: -webkit-linear-gradient(266deg, var(--stylecolor1) 17.92%, var(--stylecolor2) 53.68%);
   background-size: 500% auto;
@@ -460,4 +460,84 @@ form>*{
   display: flex;
   margin-bottom: 1.31rem;
   gap: 2rem;
+}
+
+.projectheadmain>*{
+  margin-left: 4%;
+}
+
+.projectheadmain>p{
+  font-size: 1rem;
+}
+
+.specialtext, .userfields>h1{
+  font-size: 3.5rem;
+  margin-bottom: 2%;
+  margin-top: 0
+}
+
+.projecthead{
+  display: flex;
+  gap: 2.5%;
+  margin-top: 3%;
+}
+.projectheadmain{
+  flex: 1 1 68%;
+}
+.projectheadother{
+  flex: 1 1 32%;
+  background-color: var(--listcolor);
+  border-radius: 1.75rem;
+  padding: 1.5rem;
+}
+
+.projectheadother li{
+  padding: 0.7rem;
+  border-bottom: 0.01rem solid rgba(255, 255, 255, 0.32);
+  border-radius: 0.25rem;
+}
+
+.projectheadother li:hover{
+  background: var(--listcolorhover);
+  cursor: pointer;
+
+}
+.projectheadother > ul{
+  list-style: none;
+  padding: 0;
+}
+
+.projectheadmain>h1 + div{
+  display: flex;
+  gap: 1.5rem;
+}
+.projectheadmain>h1 + div>span{
+  color: var(--activecolor);
+}
+.projectheadmain> p{
+  color: var(--contentcolor);
+  margin-top: 5%;
+}
+
+li>.projauthorname{
+  color: var(--listcontentcolor);
+  font-size: 1.5rem;
+}
+
+li>.projauthoraffl{
+  color: #787878
+}
+
+li>.projauthorisadmin{
+  color: rgba(0,0,0,0);
+  font-weight: 600;
+  background: -webkit-linear-gradient(266deg, var(--stylecolor1) 17.92%, var(--stylecolor2) 53.68%);
+  background-size: 500% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.link{
+  text-decoration: none;
+  list-style: none;
 }
