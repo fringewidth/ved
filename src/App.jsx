@@ -10,7 +10,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/authenticate/:authtype" element={<Authenticate />} />
-        <Route path="/user" element={<UserPage />} />
+        <Route path="/user/:username" element={<UserPage />} />
+        {/* <Route path="/project" element={<ProjectPage />} /> */}
       </Routes>
     </>
   );
