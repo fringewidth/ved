@@ -21,7 +21,6 @@ export default function ProjectList(props) {
       console.log(error);
     }
   };
-  console.log(data);
   return (
     <div>
       <h1>{props.header}</h1>

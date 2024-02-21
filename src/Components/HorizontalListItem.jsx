@@ -7,7 +7,6 @@ import Field from "./Field";
 
 export default function HorizontalListItem(props) {
   const entries = Object.entries(props.item); //Converts object to array of arrays as [..[key,value]..]
-  console.log(entries);
   const [[, id], [, title], ...rest] = entries; //extract only the values, group into title and rest
   const [, field] = rest.pop(); //rest contains [...field, citations] which are to be rendered separately
   const [, citations] = rest.pop();

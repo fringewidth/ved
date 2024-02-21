@@ -30,7 +30,6 @@ export default function PublicationPage() {
       .select()
       .eq("publication_id", publication_id.slice(1));
     setItems(data);
-    console.log(data);
   };
   const getUsers = async () => {
     if (items.length > 0) {
@@ -49,7 +48,7 @@ export default function PublicationPage() {
       setUsers(userData);
     }
   };
-  console.log(users);
+
   const userList = users.map((user, index) => (
     <span style={{ color: "white" }}>
       <Link to={`/user/:${user[0].username}`} key={index}>
@@ -69,8 +68,8 @@ export default function PublicationPage() {
             Part of the project{" "}
             <Link to={`/project/:${items[0].project_id}`}>
               {items[0].project_title}
-            </Link>{" "}
-            | Cited {items[0].citations_count}{" "}
+            </Link>
+            {"  "}|{"  "} Cited {items[0].citations_count}{" "}
             {items[0].citations_count === 1 ? "time" : "times"}
           </p>
           <p>{items[0].doi}</p>

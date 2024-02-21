@@ -11,6 +11,7 @@
   --listcolorhover: rgba(217, 217, 217, 0.20);
   --listcontentcolor: #B9B9B9;
   --activecolor: #bdd0d1;
+  --button2color: rgba(255, 255, 255, 0.32);
 }
 
 @keyframes movegrad {
@@ -360,7 +361,7 @@ form>*{
 
 .submit, button{
   padding: 0.8125rem 0.875rem;
-  background: rgba(255, 255, 255, 0.32);
+  background: var(--button2color);
   color: var(--contentcolor);
   border-radius: 0.875rem;
 }
@@ -378,6 +379,7 @@ form>*{
 
   /* style */
   border: none;
+  color: var(--contentcolor);
   border-radius: 5rem;
   background-color: #171717;
   caret-color: var(--contentcolor);
@@ -540,4 +542,10 @@ li>.projauthorisadmin{
 .link{
   text-decoration: none;
   list-style: none;
+}
+
+.signout{
+  margin-right: 1%;
+  background: var(--button2color);
+  color: var(--contentcolor)
 }
