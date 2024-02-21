@@ -50,7 +50,11 @@ export default function Authenticate(props) {
   const authValues =
     authtype === ":login"
       ? { greeting: "Hello again!", buttonText: "Log in", handleSubmit: login }
-      : { greeting: "Welcome!", buttonText: "Sign up", handleSubmit: signup };
+      : {
+          greeting: "Welcome aboard!",
+          buttonText: "Sign up",
+          handleSubmit: signup,
+        };
 
   return (
     <>

@@ -584,7 +584,8 @@ li>.projauthorisadmin{
 .publication-page-link{
   color:  #BFD2FF;
   text-decoration: underline;
-  display: flex;
+  display: inline-flex;
+  gap: 0.2rem;
   align-items: center;
 }
 .publication::after{

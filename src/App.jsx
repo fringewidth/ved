@@ -5,6 +5,7 @@ import Authenticate from "./Components/Authenticate";
 import UserPage from "./Components/UserPage";
 import ProjectPage from "./Components/ProjectPage";
 import PublicationPage from "./Components/PublicationPage";
+import Search from "./Components/Search";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           path="/publication/:publication_id"
           element={<PublicationPage />}
         />
+        <Route path="/search/:query" element={<Search />} />
       </Routes>
     </>
   );
