@@ -44,8 +44,28 @@ export default function Authenticate(props) {
       navigate(`/user/:${data[0].username}`);
     }
   };
-  const signup = (e) => {
+  const signup = async (e) => {
     e.preventDefault();
+    const { data, error } = await supabase.auth.signUp({
+      email: inputs.email,
+      password: inputs.password,
+    });
+    if (error) {
+      alert(error.message);
+    }
+    console.log(data, error);
+    if (data.user === null) {
+      e.target.email.style.border = "1px solid red";
+      e.target.password.style.border = "1px solid red";
+    } else {
+      e.target.email.style.border = "none";
+      const { data, error } = await supabase
+        .from("researchers")
+        .select("username")
+        .eq("email", inputs.email);
+
+      navigate(`/user/:${data[0].username}`);
+    }
   };
   const authValues =
     authtype === ":login"
@@ -67,6 +87,24 @@ export default function Authenticate(props) {
         <div>
           <form action="" className="form" onSubmit={authValues.handleSubmit}>
             <p className="specialtext">{authValues.greeting}</p>
+            {/* {authtype === ":signup" ? (
+              <>
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  name="fullname"
+                  className="input"
+                  onChange={handleInputChange}
+                />
+                <input
+                  type="text"
+                  placeholder="About"
+                  name="bio"
+                  className="input about"
+                  onChange={handleInputChange}
+                />
+              </>
+            ) : null} */}
             <input
               type="text"
               placeholder="email"
