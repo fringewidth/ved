@@ -23,14 +23,14 @@ export default function NavBar(props) {
     }
   };
 
-  useEffect(() => {
-    getSession();
-  }, []);
-
   const getSession = async () => {
     const { data, error } = await supabase.auth.getSession();
     setSession(data?.session);
   };
+
+  useEffect(() => {
+    getSession();
+  });
 
   return (
     <div className="navbar">

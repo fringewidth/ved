@@ -12,27 +12,96 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default function UserPage() {
+  const [inputs, setInputs] = useState({
+    fullName: "",
+    affl: "",
+    bio: "",
+    city: "",
+    yoe: "",
+    publications: "",
+  });
+  const [editing, setEditing] = useState(false);
   const [data, setData] = useState([]);
   const { username } = useParams();
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    getSession();
+  }, []);
+
+  const getSession = async () => {
+    try {
+      const { data, error } = await supabase.auth.getSession();
+      setSession(data?.session);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getItems();
   }, []);
 
   const getItems = async () => {
-    const { data, error } = await supabase
-      .from("user_page")
-      .select(
-        "full_name, affiliation, bio, city, yoe, publications, citations, active_projects, fields"
-      )
-      .eq("username", username.slice(1));
-    setData(data);
-    if (error) {
+    try {
+      const { data, error } = await supabase
+        .from("user_page")
+        .select(
+          "full_name, affiliation, bio, city, yoe, publications, citations, active_projects, fields, email"
+        )
+        .eq("username", username.slice(1));
+      setData(data);
+      if (error) {
+        console.log(error);
+      }
+    } catch (error) {
       console.log(error);
     }
   };
 
-  const list_count = 6;
+  const handleDataChange = (e) => {
+    setInputs({
+      ...inputs,
+      [e.target.name]:
+        e.target.value === "" ? e.target.placeholder : e.target.value,
+    });
+    if (e.target.value !== e.target.placeholder) {
+      e.target.style.border = "2px solid green";
+    } else {
+      e.target.style.border = "none";
+    }
+    if (e.target.value === "") {
+      e.target.style.border = "none";
+    }
+  };
+
+  const handleSubmit = async () => {
+    const full_name = inputs.fullName || (data.length > 0 && data[0].full_name);
+    const affiliation = inputs.affl || (data.length > 0 && data[0].affiliation);
+    const bio = inputs.bio || (data.length > 0 && data[0].bio);
+    const city = inputs.city || (data.length > 0 && data[0].city);
+    const yoe = inputs.yoe || (data.length > 0 && data[0].yoe);
+    const names = full_name.split(" ");
+    const first_name = names[0];
+    const last_name = names[names.length - 1];
+    const middle_name = names.length === 2 ? null : names[1];
+    setEditing(!editing);
+    const { sure, error } = await supabase.rpc("update_user_info", {
+      username_arg: username.slice(1),
+      first_name_arg: first_name,
+      middle_name_arg: middle_name,
+      last_name_arg: last_name,
+      user_email_arg: session.user.email,
+      city_arg: city,
+      yoe_arg: yoe,
+      affiliation_arg: affiliation,
+      bio_arg: bio,
+    });
+    console.log(error);
+
+    window.location.reload();
+  };
+
   const icons = [pin, calendar, null, null, null];
   const content =
     data.length > 0
@@ -52,11 +121,24 @@ export default function UserPage() {
           }`,
         ]
       : ["", "", "", "", ""];
-
+  const otherNames = ["city", "yoe"];
   const otherdata = icons.map((icon, index) => (
     <div key={index} className="userdetails">
       {icon && <img className="detailsicon" src={icon} alt="" />}
-      <span className="detailscontent">{content[index]}</span>
+      <>
+        {editing && (index === 0 || index === 1) ? (
+          <input
+            onChange={handleDataChange}
+            type="text"
+            className="detailscontent input"
+            // value=
+            placeholder={content[index]}
+            name={otherNames[index]}
+          />
+        ) : (
+          <span className="detailscontent">{content[index]}</span>
+        )}
+      </>
     </div>
   ));
 
@@ -72,14 +154,73 @@ export default function UserPage() {
       <NavBar />
       <div className="userdata">
         <div className="userdatamain">
-          <div className="userfullname">
-            {data.length ? data[0].full_name : 0}
-          </div>
-          <div className="useraffl">
-            {data.length > 0 ? data[0].affiliation : ""}
-          </div>
-          <div className="userbio">{data.length > 0 ? data[0].bio : ""}</div>
+          <>
+            {editing ? (
+              <input
+                onChange={handleDataChange}
+                type="text"
+                // value={init.fullName}
+                className="input userfullname"
+                placeholder={data.length ? data[0].full_name : ""}
+                name="fullName"
+              />
+            ) : (
+              <div className="userfullname">
+                {data.length ? data[0].full_name : ""}
+              </div>
+            )}
+          </>
+          <>
+            {editing ? (
+              <input
+                onChange={handleDataChange}
+                type="text"
+                className="useraffl input"
+                // value={data.length > 0 ? data[0].affiliation : ""}
+                placeholder={data.length > 0 ? data[0].affiliation : ""}
+                name="affl"
+              />
+            ) : (
+              <div className="useraffl">
+                {data.length > 0 ? data[0].affiliation : ""}
+              </div>
+            )}
+          </>
+          <>
+            {editing ? (
+              <input
+                onChange={handleDataChange}
+                className="userbio input bio"
+                disabled={false}
+                // value={data.length > 0 ? data[0].bio : ""}
+                placeholder={data.length > 0 ? data[0].bio : ""}
+                name="bio"
+              />
+            ) : (
+              <div className="userbio">
+                {data.length > 0 ? data[0].bio : ""}
+              </div>
+            )}
+          </>
           <div className="userfields">{fields}</div>
+          {data.length > 0 && session?.user.email === data[0].email ? (
+            <div className="buttongroup">
+              {editing ? (
+                <button className="button" onClick={handleSubmit}>
+                  Done
+                </button>
+              ) : (
+                <button
+                  className="button"
+                  onClick={(e) => {
+                    setEditing(!editing);
+                  }}
+                >
+                  + Edit
+                </button>
+              )}
+            </div>
+          ) : null}
         </div>
         <div className="userdataother">{otherdata}</div>
       </div>

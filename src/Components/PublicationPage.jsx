@@ -84,46 +84,51 @@ export default function PublicationPage() {
             <p>{items[0].doi}</p>
             <p>{items[0].abstract}</p>
           </div>
-          <div class="journaldetails">
-            <div class="journallinks">
-              <a href={items[0].url}>
-                <Button>
-                  <img src={document} />
-                  Go to Paper
-                </Button>
-              </a>
-              <p>
-                Appears on{" "}
-                <a
-                  class="publication-page-link"
-                  href={"https://" + items[0].journal_website_url}
-                >
-                  {items[0].journal_name}
-                  <img src={link} />
+          {items[0].issn ? (
+            <div class="journaldetails">
+              <div class="journallinks">
+                <a href={items[0].url}>
+                  <Button>
+                    <img src={document} />
+                    Go to Paper
+                  </Button>
                 </a>
-              </p>
+                <p>
+                  Appears on{" "}
+                  <a
+                    class="publication-page-link"
+                    href={"https://" + items[0].journal_website_url}
+                  >
+                    {items[0].journal_name}
+                    <img src={link} />
+                  </a>
+                </p>
+              </div>
+
+              <div className="journalinfo">
+                <h1>
+                  <img src={info} /> Journal Info
+                </h1>
+                <p>ISSN: {items[0].issn}</p>
+                <p>Publisher: {items[0].publisher}</p>
+                <p>Impact Factor: {items[0].impact_factor}</p>
+                <p>Country: {items[0].country}</p>
+                <p>Language: {items[0].language}</p>
+                <p>
+                  Contact Email:{" "}
+                  <a
+                    class="publication-page-link"
+                    href={`mailto:${items[0].contact_email}`}
+                  >
+                    {items[0].contact_email}
+                  </a>
+                </p>
+                <p>Review Process: {items[0].review_process}</p>
+              </div>
             </div>
-            <div className="journalinfo">
-              <h1>
-                <img src={info} /> Journal Info
-              </h1>
-              <p>ISSN: {items[0].issn}</p>
-              <p>Publisher: {items[0].publisher}</p>
-              <p>Impact Factor: {items[0].impact_factor}</p>
-              <p>Country: {items[0].country}</p>
-              <p>Language: {items[0].language}</p>
-              <p>
-                Contact Email:{" "}
-                <a
-                  class="publication-page-link"
-                  href={`mailto:${items[0].contact_email}`}
-                >
-                  {items[0].contact_email}
-                </a>
-              </p>
-              <p>Review Process: {items[0].review_process}</p>
-            </div>
-          </div>
+          ) : (
+            <></>
+          )}
         </div>
       </>
     );
