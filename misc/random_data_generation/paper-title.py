@@ -31,7 +31,7 @@ def generate_paper(project_title, field):
   while True:
     time.sleep(interval)
     ans = askMistral(f"Generate a single paper's title and abstract for a project entitled \"{project_title}\". Format it as Title: [title] Abstract: [Abstract]")
-    if ans!=0:
+    if ans==0:
        print('Error. Retrying...')
        interval *= 2
     else:
