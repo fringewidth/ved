@@ -3,8 +3,9 @@ import { getSupabase } from "../utils/supabaseClient";
 import NavBar from "./NavBar";
 import { useParams } from "react-router-dom";
 import authPageAnimation from "../assets/video/auth-page-animation.mp4";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { sessionContext } from "../contexts/SessionProvider";
 
 const supabase = getSupabase();
 
@@ -14,16 +15,20 @@ export default function Authenticate(props) {
   const { authtype } = useParams();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const { session, setSession } = useContext(sessionContext);
+
+  // reset inputs and error message when switching between login and signup
   useEffect(() => {
     setInputs(initialInputs);
     setErrorMsg("");
     emailRef.current.style.border = "none";
     passwordRef.current.style.border = "none";
   }, [authtype]);
+
   const [inputs, setInputs] = useState(initialInputs);
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
-
+  console.log(session);
   const handleError = (error) => {
     setErrorMsg(error.message);
   };
@@ -36,19 +41,23 @@ export default function Authenticate(props) {
     e.preventDefault();
 
     // sign in user
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { user, session, error } = await supabase.auth.signInWithPassword({
       email: inputs.email,
       password: inputs.password,
     });
     if (error) {
       handleError(error);
     }
-    if (data.user === null) {
+    console.log(user, session);
+    if (user === null) {
       // user does not exist
       e.target.email.style.border = "1px solid red";
       e.target.password.style.border = "1px solid red";
     } else {
       e.target.email.style.border = "none";
+
+      setSession(session);
+      console.log(session);
 
       // fetch username and navigate to user page
       const { data, error } = await supabase
@@ -86,6 +95,8 @@ export default function Authenticate(props) {
       navigate(`/user/:${data[0].username}`);
     }
   };
+
+  // set authtype specific values
   const authValues =
     authtype === ":login"
       ? { greeting: "Hello again!", buttonText: "Log in", handleSubmit: login }

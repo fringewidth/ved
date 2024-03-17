@@ -1,43 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "./NavBar";
 import Field from "./Field";
 import calendar from "../assets/svg/calendar.svg";
 import pin from "../assets/svg/pin.svg";
-import { createClient } from "@supabase/supabase-js/";
+import { getSupabase } from "../utils/supabaseClient";
 import UserList from "./UserList";
+import { sessionContext } from "../contexts/SessionProvider";
 
-const supabaseUrl = "https://txouxmylhwoxcyciynby.supabase.co";
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = getSupabase();
+
+const initialInputs = {
+  fullName: "",
+  affl: "",
+  bio: "",
+  city: "",
+  yoe: "",
+  publications: "",
+};
 
 export default function UserPage() {
-  const [inputs, setInputs] = useState({
-    fullName: "",
-    affl: "",
-    bio: "",
-    city: "",
-    yoe: "",
-    publications: "",
-  });
+  const [inputs, setInputs] = useState(initialInputs);
   const [editing, setEditing] = useState(false);
   const [data, setData] = useState([]);
   const { username } = useParams();
-  const [session, setSession] = useState(null);
-
-  useEffect(() => {
-    getSession();
-  }, []);
-
-  const getSession = async () => {
-    try {
-      const { data, error } = await supabase.auth.getSession();
-      setSession(data?.session);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  const { session } = useContext(sessionContext);
+  console.log(session);
   useEffect(() => {
     getItems();
   }, []);

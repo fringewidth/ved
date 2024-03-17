@@ -6,10 +6,12 @@ import UserPage from "./Components/UserPage";
 import ProjectPage from "./Components/ProjectPage";
 import PublicationPage from "./Components/PublicationPage";
 import Search from "./Components/Search";
+import Create from "./Components/Create";
+import SessionProvider from "./contexts/SessionProvider";
 
 export default function App() {
   return (
-    <>
+    <SessionProvider>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/authenticate/:authtype" element={<Authenticate />} />
@@ -20,7 +22,8 @@ export default function App() {
           element={<PublicationPage />}
         />
         <Route path="/search/:query" element={<Search />} />
+        <Route path="/create/:project" element={<Create />} />
       </Routes>
-    </>
+    </SessionProvider>
   );
 }
