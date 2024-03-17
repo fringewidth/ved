@@ -20,12 +20,12 @@ const initialInputs = {
 };
 
 export default function UserPage() {
-  const [inputs, setInputs] = useState(initialInputs);
   const [editing, setEditing] = useState(false);
+  const [inputs, setInputs] = useState(initialInputs);
   const [data, setData] = useState([]);
   const { username } = useParams();
   const { session } = useContext(sessionContext);
-  console.log(session);
+
   useEffect(() => {
     getItems();
   }, []);
@@ -53,13 +53,10 @@ export default function UserPage() {
       [e.target.name]:
         e.target.value === "" ? e.target.placeholder : e.target.value,
     });
-    if (e.target.value !== e.target.placeholder) {
-      e.target.style.border = "2px solid green";
+    if (e.target.value !== e.target.placeholder && e.target.value !== "") {
+      e.target.style.borderColor = "green";
     } else {
-      e.target.style.border = "none";
-    }
-    if (e.target.value === "") {
-      e.target.style.border = "none";
+      e.target.style.borderColor = "white";
     }
   };
 
@@ -74,18 +71,17 @@ export default function UserPage() {
     const last_name = names[names.length - 1];
     const middle_name = names.length === 2 ? null : names[1];
     setEditing(!editing);
-    const { sure, error } = await supabase.rpc("update_user_info", {
+    const { data: success, error } = await supabase.rpc("update_user_info", {
       username_arg: username.slice(1),
       first_name_arg: first_name,
       middle_name_arg: middle_name,
       last_name_arg: last_name,
-      user_email_arg: session.user.email,
-      city_arg: city,
-      yoe_arg: yoe,
       affiliation_arg: affiliation,
       bio_arg: bio,
+      city_arg: city,
+      yoe_arg: yoe,
+      user_email_arg: session.user.email,
     });
-    console.log(error);
 
     window.location.reload();
   };
@@ -119,9 +115,9 @@ export default function UserPage() {
             onChange={handleDataChange}
             type="text"
             className="detailscontent input"
-            // value=
             placeholder={content[index]}
             name={otherNames[index]}
+            defaultValue={content[index]}
           />
         ) : (
           <span className="detailscontent">{content[index]}</span>
@@ -147,10 +143,10 @@ export default function UserPage() {
               <input
                 onChange={handleDataChange}
                 type="text"
-                // value={init.fullName}
                 className="input userfullname"
                 placeholder={data.length ? data[0].full_name : ""}
                 name="fullName"
+                defaultValue={data.length ? data[0].full_name : ""}
               />
             ) : (
               <div className="userfullname">
@@ -164,9 +160,9 @@ export default function UserPage() {
                 onChange={handleDataChange}
                 type="text"
                 className="useraffl input"
-                // value={data.length > 0 ? data[0].affiliation : ""}
                 placeholder={data.length > 0 ? data[0].affiliation : ""}
                 name="affl"
+                defaultValue={data.length > 0 ? data[0].affiliation : ""}
               />
             ) : (
               <div className="useraffl">
@@ -180,9 +176,9 @@ export default function UserPage() {
                 onChange={handleDataChange}
                 className="userbio input bio"
                 disabled={false}
-                // value={data.length > 0 ? data[0].bio : ""}
                 placeholder={data.length > 0 ? data[0].bio : ""}
                 name="bio"
+                defaultValue={data.length > 0 ? data[0].bio : ""}
               />
             ) : (
               <div className="userbio">

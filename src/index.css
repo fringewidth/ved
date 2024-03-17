@@ -373,15 +373,17 @@ form>*{
 
 .input{
   /* layout */
-  padding: 0.625rem;
+  padding: 0.225rem;
+  padding-left: 0;
   gap: 0.8125rem;
-  outline: 0.01rem solid rgba(255, 255, 255, 0.32);
+  /* outline: 0.01rem solid rgba(255, 255, 255, 0.32); */
   display: block;
 
   /* style */
   border: none;
+  border-bottom: 2px solid var(--contentcolor);
   color: var(--contentcolor);
-  border-radius: 5rem;
+  /* border-radius: 5rem; */
   background-color: #171717;
   caret-color: var(--contentcolor);
   padding-left: 1rem;
