@@ -36,6 +36,7 @@ export default function Authenticate(props) {
   const handleInputChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
+  console.log(session);
 
   const login = async (e) => {
     e.preventDefault();
@@ -47,17 +48,8 @@ export default function Authenticate(props) {
     });
     if (error) {
       handleError(error);
-    }
-    console.log(user, session);
-    if (user === null) {
-      // user does not exist
-      e.target.email.style.border = "1px solid red";
-      e.target.password.style.border = "1px solid red";
     } else {
       e.target.email.style.border = "none";
-
-      setSession(session);
-      console.log(session);
 
       // fetch username and navigate to user page
       const { data, error } = await supabase
@@ -67,7 +59,12 @@ export default function Authenticate(props) {
 
       if (error) {
         handleError(error);
-      } else navigate(`/user/:${data[0].username}`);
+      } else navigate(`/user/:${data[0]?.username}`);
+    }
+    if (user === null) {
+      // user does not exist
+      e.target.email.style.border = "1px solid red";
+      e.target.password.style.border = "1px solid red";
     }
   };
 
