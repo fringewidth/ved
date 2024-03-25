@@ -405,6 +405,17 @@ form>*{
   width: 40rem;
 }
 
+.input.auth{
+  padding: 1rem;
+  border-radius: 4rem;
+  outline: 0.1px solid rgba(146, 146, 146);
+}
+
+.input.auth:focus{
+  outline: 0.4px solid white;
+  transition: none;
+}
+
 .userdata{
   margin: 2.06rem 1.13rem;
   border-radius: 2.125rem;
