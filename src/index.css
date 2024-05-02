@@ -23,6 +23,7 @@
   }
 }
 
+
 *{
   font-family: var(--font);
   transition: 0.2s;
@@ -34,9 +35,13 @@ body{
   background: var(--bgcolor);
 }
 
+.center{
+  top: 50%;
+  transform: translateY(50%);
+}
+
 .herocontent{
   width: 100%;
-  height: 110vh;
   position: relative;
   bottom: 10vh;
   z-index: -1;
@@ -55,9 +60,9 @@ body{
 
 .herotext{
   /* layout */
-  position: relative;
-  bottom: 37%;
-  left: 17%;
+  position: absolute;
+  bottom: 26%;
+  left: 47%;
   
   /* text */
   color: var(--stylecolor1);
@@ -71,6 +76,10 @@ body{
   /* text */
   color: inherit;
   font-size: 2.8vw;
+}
+
+.herocontent + *{
+  margin-top: -10%;
 }
 
 .herotext>:first-child span, .specialtext{
@@ -333,6 +342,8 @@ footer>p:last-child{
   height: 100%;
   overflow: hidden;
   z-index: -1;
+  margin-top: 2px;
+
 }
 
 .form{
@@ -414,6 +425,12 @@ form>*{
 .input.auth:focus{
   outline: 0.4px solid white;
   transition: none;
+}
+
+.userlistheader{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .userdata{
