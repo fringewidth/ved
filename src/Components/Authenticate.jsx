@@ -28,7 +28,6 @@ export default function Authenticate(props) {
   const [inputs, setInputs] = useState(initialInputs);
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
-  console.log(session);
   const handleError = (error) => {
     setErrorMsg(error.message);
   };
@@ -36,7 +35,6 @@ export default function Authenticate(props) {
   const handleInputChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
-  console.log(session);
 
   const login = async (e) => {
     e.preventDefault();
