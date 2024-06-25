@@ -1,8 +1,8 @@
-import React from "react";
-import searchIcon from "../assets/svg/search.svg";
-const placeholder = "search for papers, projects, etc.";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import searchIcon from "../assets/svg/search.svg";
+
+const placeholder = "search for papers, projects, etc.";
 
 export default function SearchBar() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function SearchBar() {
           className="searchinput"
           onChange={handleSearch}
           placeholder={placeholder}
-        ></input>
+        />
       </form>
     </div>
   );

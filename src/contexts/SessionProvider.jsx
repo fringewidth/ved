@@ -1,9 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getSupabase } from "../utils/supabaseClient";
 
 const supabase = getSupabase();
 const sessionContext = React.createContext();
 
+// Provides user session information to the app
 export default function SessionProvider({ children }) {
   const [session, setSession] = useState(null);
   useEffect(() => {

@@ -1,7 +1,6 @@
 //renders a horizontal list.
 //props: item to render.
 
-import React from "react";
 import HorizontalListItem from "./HorizontalListItem.jsx";
 
 export default function HorizontalList(props) {

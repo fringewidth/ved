@@ -1,14 +1,14 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import VideoScroll from "./VideoScroll";
 import vedasAnimation from "../assets/video/vedas-opening.mp4";
 
 export default function HeroContent() {
-  const containerRef = useRef(null);
+  const heroRef = useRef(null);
   return (
-    <div class="herocontent" ref={containerRef}>
+    <div class="herocontent" ref={heroRef}>
       <VideoScroll
         src={vedasAnimation}
-        parentRef={containerRef}
+        parentRef={heroRef}
         triggerHeightPercentage="80"
       />
       <div className="herotext">

@@ -1,5 +1,4 @@
-import React from "react";
-import Button from "./Button";
+import BlueButton from "./BlueButton";
 import { Link } from "react-router-dom";
 
 export default function LandingFooter() {
@@ -7,9 +6,9 @@ export default function LandingFooter() {
     <footer class="landingfooter">
       <p class="specialtext footertext">Join the quest for knowledge.</p>
       <Link to="/authenticate/:signup">
-        <Button children={["Create an account"]} />
+        <BlueButton children={["Create an account"]} />
       </Link>
-      <p>Created by Hrishik Sai</p>
+      <p>Created by Hrishik Sai.</p>
     </footer>
   );
 }

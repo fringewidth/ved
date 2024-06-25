@@ -4,7 +4,7 @@ import { createClient } from "@supabase/supabase-js/dist/module";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Button from "./Button";
+import BlueButton from "./BlueButton";
 import document from "../assets/svg/document.svg";
 import info from "../assets/svg/info.svg";
 import link from "../assets/svg/link.svg";
@@ -88,10 +88,10 @@ export default function PublicationPage() {
             <div class="journaldetails">
               <div class="journallinks">
                 <a href={items[0].url}>
-                  <Button>
+                  <BlueButton>
                     <img src={document} />
                     Go to Paper
-                  </Button>
+                  </BlueButton>
                 </a>
                 <p>
                   Appears on{" "}

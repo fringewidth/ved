@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { getSupabase } from "../utils/supabaseClient";
+import { useNavigate, Link } from "react-router-dom";
+import { sessionContext } from "../contexts/SessionProvider";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
-import SignUpButton from "./SignUpButton";
-import LoginButton from "./LoginButton";
+import BlueButton from "./BlueButton";
 
-const supabaseUrl = "https://txouxmylhwoxcyciynby.supabase.co";
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = getSupabase();
 
-export default function NavBar(props) {
-  const [session, setSession] = useState(null);
+export default function NavBar() {
+  const { session } = useContext(sessionContext);
+
   const navigate = useNavigate();
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -19,27 +18,23 @@ export default function NavBar(props) {
       console.log(error);
     } else {
       navigate("/");
-      window.location.reload();
     }
   };
-
-  const getSession = async () => {
-    const { data, error } = await supabase.auth.getSession();
-    setSession(data?.session);
-  };
-
-  useEffect(() => {
-    getSession();
-  });
 
   return (
     <div className="navbar">
       <Logo />
       <SearchBar />
+
       {!session && (
         <div class="buttongroup">
-          <SignUpButton />
-          <LoginButton />
+          <Link to="/authenticate/:signup">
+            <BlueButton class="button" children={["Sign Up"]} />
+          </Link>
+
+          <Link to="/authenticate/:login">
+            <BlueButton class="button" children={["Login"]} />
+          </Link>
         </div>
       )}
       {session && (

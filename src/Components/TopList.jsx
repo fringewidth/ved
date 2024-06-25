@@ -1,12 +1,9 @@
 //Sorts by citations and returns top objects. Objects specified by props.
-//Props: count: number of elements, table: table to query, header, fields to display
 
-import React from "react";
 import HorizontalList from "./HorizontalList.jsx";
-import { createClient } from "@supabase/supabase-js";
-const supabaseUrl = "https://txouxmylhwoxcyciynby.supabase.co";
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { getSupabase } from "../utils/supabaseClient";
+
+const supabase = getSupabase();
 import { useState, useEffect } from "react";
 
 export default function TopProjects(props) {
@@ -16,6 +13,7 @@ export default function TopProjects(props) {
     getItems();
   }, []);
 
+  // returns a promise, and hence cannot be directly used in useEffect
   const getItems = async () => {
     const { data, error } = await supabase
       .from(props.table)
@@ -25,6 +23,7 @@ export default function TopProjects(props) {
     if (error) console.log(error);
     setItems(data);
   };
+
   return (
     <div>
       <h1>{props.header}</h1>
