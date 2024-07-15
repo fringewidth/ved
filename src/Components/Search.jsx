@@ -29,7 +29,7 @@ export default function Search() {
         config: "english",
       });
     setProjects(data);
-    console.log(data);
+    // console.log(data);
   };
 
   const getPublications = async () => {

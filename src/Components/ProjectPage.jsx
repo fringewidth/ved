@@ -42,7 +42,7 @@ export default function ProjectPage() {
       if (error) {
         setError(error);
       }
-      console.log(items);
+      // console.log(items);
     } catch (error) {
       setError(error);
     }

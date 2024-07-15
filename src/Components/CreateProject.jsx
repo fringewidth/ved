@@ -38,7 +38,7 @@ export default function CreateProject(props) {
         console.log(error);
       }
       if (data) {
-        console.log(data);
+        // console.log(data);
         navigate(-1);
       }
     } catch (error) {
