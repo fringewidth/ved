@@ -85,10 +85,3 @@ with open("users.json", "w") as f: # in case it throws an error
     print(users[-1])
     print("******")
     json.dump(users, f, indent=2)
-
-
-
-
-
-
-
