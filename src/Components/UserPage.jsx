@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { getSupabase } from "../utils/supabaseClient";
+import { sessionContext } from "../contexts/SessionProvider";
+import UserList from "./UserList";
 import NavBar from "./NavBar";
 import Field from "./Field";
 import calendar from "../assets/svg/calendar.svg";
 import pin from "../assets/svg/pin.svg";
-import { getSupabase } from "../utils/supabaseClient";
-import UserList from "./UserList";
-import { sessionContext } from "../contexts/SessionProvider";
 
 const supabase = getSupabase();
 
@@ -68,8 +68,8 @@ export default function UserPage() {
     const yoe = inputs.yoe || (data.length > 0 && data[0].yoe);
     const names = full_name.split(" ");
     const first_name = names[0];
-    const last_name = names[names.length - 1];
-    const middle_name = names.length === 2 ? null : names[1];
+    const last_name = names[names.length - 1] || "";
+    const middle_name = names.length === 2 ? "" : names[1];
     setEditing(!editing);
     const { data: success, error } = await supabase.rpc("update_user_info", {
       username_arg: username.slice(1),
@@ -112,6 +112,9 @@ export default function UserPage() {
       <>
         {editing && (index === 0 || index === 1) ? (
           <input
+            onClick={(e) => {
+              e.target.select();
+            }}
             onChange={handleDataChange}
             type="text"
             className="detailscontent input"
@@ -141,6 +144,9 @@ export default function UserPage() {
           <>
             {editing ? (
               <input
+                onClick={(e) => {
+                  e.target.select();
+                }}
                 onChange={handleDataChange}
                 type="text"
                 className="input userfullname"
@@ -157,6 +163,9 @@ export default function UserPage() {
           <>
             {editing ? (
               <input
+                onClick={(e) => {
+                  e.target.select();
+                }}
                 onChange={handleDataChange}
                 type="text"
                 className="useraffl input"
@@ -173,6 +182,9 @@ export default function UserPage() {
           <>
             {editing ? (
               <input
+                onClick={(e) => {
+                  e.target.select();
+                }}
                 onChange={handleDataChange}
                 className="userbio input bio"
                 disabled={false}

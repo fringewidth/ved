@@ -113,7 +113,7 @@ export default function Authenticate(props) {
           <form action="" className="form" onSubmit={authValues.handleSubmit}>
             <p className="specialtext">{authValues.greeting}</p>
             {errorMsg !== "" ? (
-              <div className="autherror">{errorMsg}</div>
+              <div className="errormsg">{errorMsg}</div>
             ) : null}
             <input
               type="text"

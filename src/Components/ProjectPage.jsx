@@ -1,19 +1,17 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams, Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import Field from "./Field";
 import ProjectList from "./ProjectList";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { createClient } from "@supabase/supabase-js/";
-import { Link } from "react-router-dom";
+import { getSupabase } from "../utils/supabaseClient";
+import { sessionContext } from "../contexts/SessionProvider";
 
-const supabaseUrl = "https://txouxmylhwoxcyciynby.supabase.co";
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = getSupabase();
 
 export default function ProjectPage() {
-  const { project_id } = useParams();
-  const [session, setSession] = useState(null);
+  const { project_id, status } = useParams();
+
+  const session = useContext(sessionContext);
   const [items, setItems] = useState([]);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
@@ -24,10 +22,6 @@ export default function ProjectPage() {
 
   useEffect(() => {
     getUsers();
-  }, [items]);
-
-  useEffect(() => {
-    getSession();
   }, [items]);
 
   const getItems = async () => {
@@ -59,16 +53,6 @@ export default function ProjectPage() {
         { returnType: "single" }
       );
       // navigate("/user/:" + items?.admin_id);
-    } catch (error) {
-      setError(error);
-    }
-  };
-
-  const getSession = async () => {
-    try {
-      const { data } = await supabase.auth.getSession();
-      setSession(data?.session);
-      console.log(session);
     } catch (error) {
       setError(error);
     }

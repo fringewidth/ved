@@ -26,3 +26,4 @@ dist-ssr
 
 # Other
 *.pyc
+misc/random_data_generation/projects.json
