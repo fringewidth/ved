@@ -391,7 +391,6 @@ button.link {
   border: none;
 }
 
-
 .submit:hover,
 button:hover {
   background: rgba(255, 255, 255, 0.52);
@@ -550,13 +549,43 @@ button:hover {
   padding: 1.5rem;
 }
 
-.projectheadother li {
+.usersearch * {
+  font-size: 1rem !important;
+}
+
+.usersearch {
+  /* border: 2px dotted cyan; */
+  width: 20rem;
+  height: 32rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: gray var(--bgcolor);
+  margin: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem 0rem rgba(255, 255, 255, 0.32);
+}
+
+.usersearch .input {
+  width: 100%;
+  padding: 0.5rem;
+  padding-left: 2rem;
+  border-bottom: 1px solid gray;
+}
+
+.userserach li {
+  padding: 0;
+}
+
+.projectheadother li,
+.usersearch li {
   padding: 0.7rem;
   border-bottom: 0.01rem solid rgba(255, 255, 255, 0.32);
   border-radius: 0.25rem;
 }
 
-.projectheadother li:hover {
+.projectheadother li:hover,
+.usersearch li:hover {
   background: var(--listcolorhover);
   cursor: pointer;
 }
