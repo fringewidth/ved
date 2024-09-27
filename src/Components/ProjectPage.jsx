@@ -1,20 +1,50 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import Field from "./Field";
 import ProjectList from "./ProjectList";
+import UserSearch from "./UserSearch";
 import { getSupabase } from "../utils/supabaseClient";
 import { sessionContext } from "../contexts/SessionProvider";
 
 const supabase = getSupabase();
 
 export default function ProjectPage() {
-  const { project_id, status } = useParams();
+  const { project_id } = useParams();
 
   const { session } = useContext(sessionContext);
+
+  const searchBoxRef = useRef(null);
+  const addContributorRef = useRef(null);
+
   const [items, setItems] = useState([]);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
+  const [showUserSearch, setShowUserSearch] = useState(false);
+  const [searchPosition, setSearchPosition] = useState({ left: 0, top: 0 });
+
+  const SEARCH_BOX_HEIGHT = 24;
+  const SEARCH_BOX_WIDTH = 20;
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      // Close the search box if the click is outside of it,
+      // but not when clicking the add contributor button
+      // as that would prevent it from being opened in the first place.
+      if (
+        searchBoxRef.current &&
+        !searchBoxRef.current.contains(e.target) &&
+        addContributorRef.current &&
+        !addContributorRef.current.contains(e.target)
+      ) {
+        setShowUserSearch(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     getItems();
@@ -36,7 +66,6 @@ export default function ProjectPage() {
       if (error) {
         setError(error);
       }
-      // console.log(items);
     } catch (error) {
       setError(error);
     }
@@ -96,15 +125,27 @@ export default function ProjectPage() {
     </Link>
   ));
 
-  const handleAddNewUser = () => {
-    alert("helloooo :3");
+  const handleAddNewUser = async (e) => {
+    const { clientX, clientY } = e;
+    const left = Math.min(
+      clientX,
+      window.innerWidth - SEARCH_BOX_WIDTH * 16 - 50
+    );
+    const top = Math.min(
+      clientY,
+      window.innerHeight - SEARCH_BOX_HEIGHT * 16 - 50
+    ); // 1rem = 16px
+    setSearchPosition({ left, top });
+    setShowUserSearch(true);
   };
 
   if (isUserAdmin) {
     userList.push(
       <div onClick={handleAddNewUser} class="link">
         <li>
-          <div className="projauthorisadmin">+ Add Contributor</div>
+          <div className="projauthorisadmin" ref={addContributorRef}>
+            + Add Contributor
+          </div>
         </li>
       </div>
     );
@@ -145,6 +186,20 @@ export default function ProjectPage() {
         header="Papers"
         project_id={project_id.slice(1)}
       />
+      {showUserSearch && (
+        <div
+          style={{
+            position: "absolute",
+            top: searchPosition.top,
+            left: searchPosition.left,
+            height: `${SEARCH_BOX_HEIGHT}rem`,
+            width: `${SEARCH_BOX_WIDTH}rem`,
+          }}
+          ref={searchBoxRef}
+        >
+          <UserSearch />
+        </div>
+      )}
       {error && <p>Error: {error.message}</p>}
     </>
   );

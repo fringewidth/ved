@@ -3,7 +3,7 @@ import { getSupabase } from "../utils/supabaseClient";
 
 const supabase = getSupabase();
 
-export default function UsernameSearch() {
+export default function UserSearch() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchInput, setSearchInput] = useState("");
