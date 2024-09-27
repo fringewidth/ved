@@ -385,6 +385,13 @@ button {
   border-radius: 0.875rem;
 }
 
+button.link {
+  background: none;
+  color: var(--stylecolor1);
+  border: none;
+}
+
+
 .submit:hover,
 button:hover {
   background: rgba(255, 255, 255, 0.52);

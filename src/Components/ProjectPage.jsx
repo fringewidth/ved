@@ -11,14 +11,14 @@ const supabase = getSupabase();
 export default function ProjectPage() {
   const { project_id, status } = useParams();
 
-  const session = useContext(sessionContext);
+  const { session } = useContext(sessionContext);
   const [items, setItems] = useState([]);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     getItems();
-  }, [items]);
+  }, []);
 
   useEffect(() => {
     getUsers();
@@ -80,6 +80,8 @@ export default function ProjectPage() {
     }
   };
 
+  const isUserAdmin = items[0]?.email === session?.user?.email;
+
   const userList = users?.map((user) => (
     <Link to={"/user/:" + user[0].username} class="link">
       <li>
@@ -93,6 +95,20 @@ export default function ProjectPage() {
       </li>
     </Link>
   ));
+
+  const handleAddNewUser = () => {
+    alert("helloooo :3");
+  };
+
+  if (isUserAdmin) {
+    userList.push(
+      <div onClick={handleAddNewUser} class="link">
+        <li>
+          <div className="projauthorisadmin">+ Add Contributor</div>
+        </li>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -116,7 +132,7 @@ export default function ProjectPage() {
         </div>
         <div class="projectheadother">
           <ul>{userList}</ul>
-          {items[0]?.researchers?.email === session?.user?.email && session ? (
+          {isUserAdmin ? (
             <button class="deletebutton" onClick={handleDeleteProject}>
               Delete Project
             </button>

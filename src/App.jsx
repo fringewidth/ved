@@ -8,6 +8,7 @@ import PublicationPage from "./Components/PublicationPage";
 import Search from "./Components/Search";
 import CreateProject from "./Components/CreateProject";
 import SessionProvider from "./contexts/SessionProvider";
+import UsernameSearch from "./Components/UsernameSearch";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
           element={<PublicationPage />}
         />
         <Route path="/search/:query" element={<Search />} />
+        <Route path="/usernameSearch/" element={<UsernameSearch />} />
       </Routes>
     </SessionProvider>
   );
