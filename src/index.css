@@ -12,6 +12,7 @@
   --listcontentcolor: #b9b9b9;
   --activecolor: #bdd0d1;
   --button2color: rgba(255, 255, 255, 0.32);
+  --popupcolor: rgb(26, 26, 26);
 }
 
 @keyframes movegrad {
@@ -124,6 +125,7 @@ body {
 
   /* style */
   border-radius: 0.75rem;
+  border: none;
   background: linear-gradient(
     76deg,
     var(--stylecolor1) -53.13%,
@@ -383,6 +385,7 @@ button {
   background: var(--button2color);
   color: var(--contentcolor);
   border-radius: 0.875rem;
+  border: none;
 }
 
 button.link {
@@ -725,4 +728,67 @@ li > .projauthorisadmin {
 .projcreateform h1 {
   margin-left: 0;
   font-size: 1.5rem;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(26, 26, 26, 0.5);
+  z-index: 1000;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--popupcolor);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  width: 40rem;
+  z-index: 1000;
+}
+
+.popup * {
+  padding: 0;
+  margin: 0;
+}
+
+.popup h1 {
+  font-size: 1.7rem;
+  color: var(--contentcolor);
+  background: none;
+}
+
+.popup p {
+  font-size: 1.2rem;
+  background: none;
+}
+
+.popup button {
+  background-color: rgba(0, 0, 0, 0.498);
+  font-weight: 600;
+  height: 3rem;
+  width: 5rem;
+  border-width: 1.5px;
+  border-style: solid;
+  box-shadow: 0 0 0 0.1rem rgba(31, 30, 30, 0.32);
+}
+
+.popup button.normal {
+  border-color: rgba(255, 255, 255, 0.677);
+}
+
+.popup button.danger {
+  color: red;
+  border-color: red;
+}
+.popup button:hover {
+  background-color: gray;
 }
