@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import Field from "./Field";
 import ProjectList from "./ProjectList";
 import UserSearch from "./UserSearch";
+import Popup from "./Popup";
 import { getSupabase } from "../utils/supabaseClient";
 import { sessionContext } from "../contexts/SessionProvider";
 
@@ -23,6 +24,7 @@ export default function ProjectPage() {
   const [showUserSearch, setShowUserSearch] = useState(false);
   const [searchPosition, setSearchPosition] = useState({ left: 0, top: 0 });
   const [selected, setSelected] = useState(null);
+  const [popup, setPopup] = useState(null);
 
   const SEARCH_BOX_HEIGHT = 24;
   const SEARCH_BOX_WIDTH = 20;
@@ -60,7 +62,7 @@ export default function ProjectPage() {
       if (error) {
         console.log(error);
       }
-      console.log("Contributor added");
+      window.location.reload();
     }
   };
 
@@ -93,21 +95,39 @@ export default function ProjectPage() {
     }
   };
 
-  const handleDeleteProject = async () => {
-    try {
-      console.log("not supported yet");
-      //   await supabase.rpc(
-      //     "delete_project",
-      //     {
-      //       project_id_arg: project_id.slice(1),
-      //       user_email_arg: session?.user.email,
-      //     },
-      //     { returnType: "single" }
-      //   );
-      //   // navigate("/user/:" + items?.admin_id);
-    } catch (error) {
-      setError(error);
+  const deleteProject = async () => {
+    const { error } = await supabase.rpc(
+      "delete_project",
+      {
+        project_id_arg: project_id.slice(1),
+      },
+      { returnType: "void" }
+    );
+    if (error) {
+      console.log(error);
     }
+    window.location.href = "/user/:" + items[0].admin_id;
+  };
+
+  const handleDeleteProject = async () => {
+    setPopup({
+      header: "Are you sure you want to delete this project?",
+      content: "All papers associated with this project will also be deleted.",
+      buttons: [
+        {
+          text: "Delete",
+          class: "danger",
+          onClick: deleteProject,
+        },
+        {
+          text: "Cancel",
+          class: "normal",
+          onClick: () => {
+            setPopup(null);
+          },
+        },
+      ],
+    });
   };
 
   const getUsers = async () => {
@@ -133,6 +153,7 @@ export default function ProjectPage() {
   };
 
   const isUserAdmin = items[0]?.email === session?.user?.email;
+  console.log(items);
 
   const userList = users?.map((user) => (
     <Link to={"/user/:" + user[0].username} class="link">
@@ -177,6 +198,7 @@ export default function ProjectPage() {
   return (
     <>
       <NavBar />
+      {popup && <Popup {...popup} />}
       <div class="projecthead">
         <div class="projectheadmain">
           <h1 class="specialtext">
