@@ -3,7 +3,7 @@ import { getSupabase } from "../utils/supabaseClient";
 
 const supabase = getSupabase();
 
-export default function UserSearch() {
+export default function UserSearch(props) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchInput, setSearchInput] = useState("");
@@ -39,13 +39,25 @@ export default function UserSearch() {
     if (error) {
       console.error(error);
     }
-    console.log(data);
     setData(data);
     setLoading(false);
   };
 
   const handleSearchChange = (e) => {
     setSearchInput(e.target.value);
+  };
+
+  const handleUserClick = (e) => {
+    props.setShowUserSearch(false);
+    const selectedUsername =
+      e.target.querySelector(".usersearch_username")?.innerText.slice(1) ||
+      e.target.parentNode
+        .querySelector(".usersearch_username")
+        ?.innerText.slice(1) ||
+      null;
+    if (selectedUsername) {
+      props.setSelected(selectedUsername);
+    }
   };
 
   return (
@@ -62,9 +74,11 @@ export default function UserSearch() {
         ) : (
           data &&
           data.map((user) => (
-            <li>
+            <li onClick={handleUserClick}>
               <div className="projauthorname">{user.full_name}</div>
-              <span className="projauthoraffl">@{user.username}</span>
+              <span className="projauthoraffl usersearch_username">
+                @{user.username}
+              </span>
               <span className="projauthoraffl"> &bull; </span>
               <span className="projauthoraffl">{user.affiliation}</span>
             </li>

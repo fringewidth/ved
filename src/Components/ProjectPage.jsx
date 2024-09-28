@@ -22,6 +22,7 @@ export default function ProjectPage() {
   const [error, setError] = useState(null);
   const [showUserSearch, setShowUserSearch] = useState(false);
   const [searchPosition, setSearchPosition] = useState({ left: 0, top: 0 });
+  const [selected, setSelected] = useState(null);
 
   const SEARCH_BOX_HEIGHT = 24;
   const SEARCH_BOX_WIDTH = 20;
@@ -45,6 +46,27 @@ export default function ProjectPage() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  const addContributor = async () => {
+    if (selected) {
+      const { error } = await supabase.rpc(
+        "add_contributor",
+        {
+          username_arg: selected,
+          project_id_arg: project_id.slice(1),
+        },
+        { returnType: "void" }
+      );
+      if (error) {
+        console.log(error);
+      }
+      console.log("Contributor added");
+    }
+  };
+
+  useEffect(() => {
+    addContributor();
+  }, [selected]);
 
   useEffect(() => {
     getItems();
@@ -73,15 +95,16 @@ export default function ProjectPage() {
 
   const handleDeleteProject = async () => {
     try {
-      await supabase.rpc(
-        "delete_project",
-        {
-          project_id_arg: project_id.slice(1),
-          user_email_arg: session?.user.email,
-        },
-        { returnType: "single" }
-      );
-      // navigate("/user/:" + items?.admin_id);
+      console.log("not supported yet");
+      //   await supabase.rpc(
+      //     "delete_project",
+      //     {
+      //       project_id_arg: project_id.slice(1),
+      //       user_email_arg: session?.user.email,
+      //     },
+      //     { returnType: "single" }
+      //   );
+      //   // navigate("/user/:" + items?.admin_id);
     } catch (error) {
       setError(error);
     }
@@ -197,7 +220,10 @@ export default function ProjectPage() {
           }}
           ref={searchBoxRef}
         >
-          <UserSearch />
+          <UserSearch
+            setShowUserSearch={setShowUserSearch}
+            setSelected={setSelected}
+          />
         </div>
       )}
       {error && <p>Error: {error.message}</p>}
