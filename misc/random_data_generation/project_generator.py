@@ -56,7 +56,6 @@ with open('ved/misc/random_data_generation/projects.json', 'w') as f:
     project = generate_project()
     projects.append(project)
     print(project)
-    projects.append(project)
     f.write(json.dumps(projects) + '<sep>\n')
     print("*** Done ***")
     
