@@ -9,7 +9,7 @@ export default function Popup(props) {
         <div className="buttongroup">
           {props.buttons?.map((button) => {
             return (
-              <button class={button.class} onClick={button.onClick}>
+              <button className={button.class} onClick={button.onClick}>
                 {button.text}
               </button>
             );

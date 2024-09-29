@@ -1,12 +1,12 @@
-import React from "react";
-import { createClient } from "@supabase/supabase-js";
-const supabaseUrl = "https://txouxmylhwoxcyciynby.supabase.co";
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import HorizontalList from "./HorizontalList";
+import { getSupabase } from "../utils/supabaseClient";
+import { sessionContext } from "../contexts/SessionProvider";
+
+const supabase = getSupabase();
 
 export default function ProjectList(props) {
+  const { session } = useContext(sessionContext);
   const [data, setData] = useState([]);
   useEffect(() => {
     getProjects();
@@ -21,9 +21,23 @@ export default function ProjectList(props) {
       console.log(error);
     }
   };
+
+  // console.log(session)
   return (
     <div>
       <h1>{props.header}</h1>
+      {/* {session?.user.email === email && props.table == "user_publications" && (
+        <Link
+          to="/addPaper"
+          style={{
+            textDecoration: "none",
+            verticalAlign: "middle",
+          }}
+          className="button"
+        >
+          +
+        </Link>
+      )} */}
       <HorizontalList items={data} context={props.context} />
     </div>
   );

@@ -53,7 +53,7 @@ export default function PublicationPage() {
   const userList = users.map((user, index) => (
     <span style={{ color: "white" }}>
       <Link
-        class="publication-page-link"
+        className="publication-page-link"
         to={`/user/:${user[0].username}`}
         key={index}
       >
@@ -67,13 +67,13 @@ export default function PublicationPage() {
       <>
         <NavBar />
         <div className="pubdetails">
-          <div class="paperdetails">
+          <div className="paperdetails">
             <h1>{items[0].title}</h1>
             {userList}
             <p>
               Part of the project{" "}
               <Link
-                class="publication-page-link"
+                className="publication-page-link"
                 to={`/project/:${items[0].project_id}`}
               >
                 {items[0].project_title}
@@ -85,8 +85,8 @@ export default function PublicationPage() {
             <p>{items[0].abstract}</p>
           </div>
           {items[0].issn ? (
-            <div class="journaldetails">
-              <div class="journallinks">
+            <div className="journaldetails">
+              <div className="journallinks">
                 <a href={items[0].url}>
                   <BlueButton>
                     <img src={document} />
@@ -96,7 +96,7 @@ export default function PublicationPage() {
                 <p>
                   Appears on{" "}
                   <a
-                    class="publication-page-link"
+                    className="publication-page-link"
                     href={"https://" + items[0].journal_website_url}
                   >
                     {items[0].journal_name}
@@ -117,7 +117,7 @@ export default function PublicationPage() {
                 <p>
                   Contact Email:{" "}
                   <a
-                    class="publication-page-link"
+                    className="publication-page-link"
                     href={`mailto:${items[0].contact_email}`}
                   >
                     {items[0].contact_email}

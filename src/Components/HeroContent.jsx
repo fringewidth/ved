@@ -5,7 +5,7 @@ import vedasAnimation from "../assets/video/vedas-opening.mp4";
 export default function HeroContent() {
   const heroRef = useRef(null);
   return (
-    <div class="herocontent" ref={heroRef}>
+    <div className="herocontent" ref={heroRef}>
       <VideoScroll
         src={vedasAnimation}
         parentRef={heroRef}

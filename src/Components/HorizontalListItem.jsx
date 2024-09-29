@@ -17,9 +17,9 @@ export default function HorizontalListItem(props) {
   });
 
   return (
-    <Link to={`/${props.context}/:${id}`} class="horlistitem">
+    <Link to={`/${props.context}/:${id}`} className="horlistitem">
       <li>
-        <div class="horitemtitle">{title}</div>
+        <div className="horitemtitle">{title}</div>
         <div>{fixedLenText}</div>
         <div>Cited {citations} times</div>
         <Field field={bottomText} />

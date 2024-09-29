@@ -21,14 +21,6 @@ export default function CreateProject(props) {
     getAllFields();
   }, []);
 
-  session &&
-    console.log({
-      title_arg: inputs.project_name,
-      description_arg: inputs.project_description,
-      field_name_arg: inputs.project_field,
-      email_arg: session.user.email,
-    });
-
   const handleDataChange = (e) => {
     setInputs({
       ...inputs,
@@ -59,7 +51,6 @@ export default function CreateProject(props) {
     }
     if (data) {
       navigate(-1);
-      console.log(data);
     }
   };
 

@@ -61,7 +61,7 @@ export default function UserSearch(props) {
   };
 
   return (
-    <div class="usersearch">
+    <div className="usersearch">
       <input
         type="text"
         onChange={handleSearchChange}

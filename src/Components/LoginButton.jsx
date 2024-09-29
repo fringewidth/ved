@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function LoginButton() {
   return (
     <Link to="/authenticate/:login">
-      <Button class="button" children={["Login"]} />
+      <Button className="button" children={["Login"]} />
     </Link>
   );
 }

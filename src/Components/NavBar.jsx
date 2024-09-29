@@ -27,13 +27,13 @@ export default function NavBar() {
       <SearchBar />
 
       {!session && (
-        <div class="buttongroup">
+        <div className="buttongroup">
           <Link to="/authenticate/:signup">
-            <BlueButton class="button" children={["Sign Up"]} />
+            <BlueButton className="button" children={["Sign Up"]} />
           </Link>
 
           <Link to="/authenticate/:login">
-            <BlueButton class="button" children={["Login"]} />
+            <BlueButton className="button" children={["Login"]} />
           </Link>
         </div>
       )}

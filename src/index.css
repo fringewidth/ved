@@ -792,3 +792,15 @@ li > .projauthorisadmin {
 .popup button:hover {
   background-color: gray;
 }
+
+.delete {
+  color: rgb(255, 249, 249);
+  background: linear-gradient(
+    76deg,
+    rgb(189, 1, 1) -53.13%,
+    rgb(137, 0, 0) 93.32%
+  );
+}
+.delete:hover {
+  background: linear-gradient(76deg, rgb(255, 131, 131) -53.13%, red 93.32%);
+}

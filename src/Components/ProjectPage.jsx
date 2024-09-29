@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
+import editIcon from "../assets/svg/edit.svg";
+import deleteIcon from "../assets/svg/delete.svg";
 import NavBar from "./NavBar";
 import Field from "./Field";
 import ProjectList from "./ProjectList";
@@ -153,10 +155,9 @@ export default function ProjectPage() {
   };
 
   const isUserAdmin = items[0]?.email === session?.user?.email;
-  console.log(items);
 
   const userList = users?.map((user) => (
-    <Link to={"/user/:" + user[0].username} class="link">
+    <Link to={"/user/:" + user[0].username} className="link">
       <li>
         <div className="projauthorname">
           {user[0].first_name + " " + user[0].last_name}
@@ -185,7 +186,7 @@ export default function ProjectPage() {
 
   if (isUserAdmin) {
     userList.push(
-      <div onClick={handleAddNewUser} class="link">
+      <div onClick={handleAddNewUser} className="link">
         <li>
           <div className="projauthorisadmin" ref={addContributorRef}>
             + Add Contributor
@@ -199,9 +200,9 @@ export default function ProjectPage() {
     <>
       <NavBar />
       {popup && <Popup {...popup} />}
-      <div class="projecthead">
-        <div class="projectheadmain">
-          <h1 class="specialtext">
+      <div className="projecthead">
+        <div className="projectheadmain">
+          <h1 className="specialtext">
             {items?.length > 0 ? items[0].title : null}
           </h1>
           <div>
@@ -216,12 +217,22 @@ export default function ProjectPage() {
           </div>
           <p>{items?.length > 0 ? items[0].description : null}</p>
         </div>
-        <div class="projectheadother">
+        <div className="projectheadother">
           <ul>{userList}</ul>
           {isUserAdmin ? (
-            <button class="deletebutton" onClick={handleDeleteProject}>
-              Delete Project
-            </button>
+            <div className="buttongroup">
+              <button className="button">
+                {" "}
+                <div>
+                  <img src={editIcon} alt="" />
+                </div>
+                Edit Project
+              </button>
+              <button className="delete button" onClick={handleDeleteProject}>
+                <img src={deleteIcon} />
+                Delete Project
+              </button>
+            </div>
           ) : null}
         </div>
       </div>
@@ -230,6 +241,7 @@ export default function ProjectPage() {
         context="publication"
         header="Papers"
         project_id={project_id.slice(1)}
+        admin_id={items[0]?.admin_id}
       />
       {showUserSearch && (
         <div

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 export default function LandingFooter() {
   return (
-    <footer class="landingfooter">
-      <p class="specialtext footertext">Join the quest for knowledge.</p>
+    <footer className="landingfooter">
+      <p className="specialtext footertext">Join the quest for knowledge.</p>
       <Link to="/authenticate/:signup">
         <BlueButton children={["Create an account"]} />
       </Link>
