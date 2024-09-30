@@ -113,6 +113,7 @@ body {
   display: flex;
   gap: 0.7rem;
   margin-right: 1.93rem;
+  align-items: flex-end;
 }
 .button {
   /* layout */
@@ -122,6 +123,7 @@ body {
   gap: 0.525rem;
   padding: 0.375rem 0.875rem;
   cursor: pointer;
+  height: 2.625rem;
 
   /* style */
   border-radius: 0.75rem;
@@ -407,6 +409,8 @@ button:hover {
   gap: 0.8125rem;
   /* outline: 0.01rem solid rgba(255, 255, 255, 0.32); */
   display: block;
+  margin-bottom: 1rem;
+  border-radius: 0.2rem;
 
   /* style */
   border: none;
@@ -443,6 +447,10 @@ button:hover {
 .input.auth:focus {
   outline: 0.4px solid white;
   transition: none;
+}
+
+select.input {
+  width: 16rem;
 }
 
 .userlistheader {
@@ -604,11 +612,12 @@ button:hover {
   padding: 0;
 }
 
-.projectheadmain > h1 + div {
+.projectheadmain > h1 + div,
+.projectheadmain > .userfullname + div {
   display: flex;
   gap: 1.5rem;
 }
-.projectheadmain > h1 + div > span {
+.activity-stat {
   color: var(--activecolor);
 }
 .projectheadmain > p {

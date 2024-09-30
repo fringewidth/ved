@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import editIcon from "../assets/svg/edit.svg";
+import checkmarkIcon from "../assets/svg/checkmark.svg";
 import deleteIcon from "../assets/svg/delete.svg";
+import crossIcon from "../assets/svg/cross.svg";
 import NavBar from "./NavBar";
 import Field from "./Field";
 import ProjectList from "./ProjectList";
 import UserSearch from "./UserSearch";
+import SelectFields from "./SelectFields";
 import Popup from "./Popup";
 import { supabase } from "../utils/supabase";
 import { sessionContext } from "../contexts/SessionProvider";
@@ -17,6 +20,12 @@ export default function ProjectPage() {
 
   const searchBoxRef = useRef(null);
   const addContributorRef = useRef(null);
+  const initialInputs = {
+    project_title: "",
+    project_description: "",
+    project_activity_status: "",
+    project_field: "",
+  };
 
   const [items, setItems] = useState([]);
   const [users, setUsers] = useState([]);
@@ -25,7 +34,8 @@ export default function ProjectPage() {
   const [searchPosition, setSearchPosition] = useState({ left: 0, top: 0 });
   const [selected, setSelected] = useState(null);
   const [popup, setPopup] = useState(null);
-  const [editing, setEditing] = useState(true);
+  const [editing, setEditing] = useState(false);
+  const [inputs, setInputs] = useState(initialInputs);
 
   const SEARCH_BOX_HEIGHT = 24;
   const SEARCH_BOX_WIDTH = 20;
@@ -93,6 +103,19 @@ export default function ProjectPage() {
       }
     } catch (error) {
       setError(error);
+    }
+  };
+  console.log(inputs);
+
+  const handleDataChange = (e) => {
+    setInputs({
+      ...inputs,
+      [e.target.name]: e.target.value,
+    });
+    if (e.target.value !== e.target.placeholder && e.target.value !== "") {
+      e.target.style.borderColor = "green";
+    } else {
+      e.target.style.borderColor = "white";
     }
   };
 
@@ -169,6 +192,9 @@ export default function ProjectPage() {
     </Link>
   ));
 
+  const handleEditProject = () => {
+    setEditing(!editing);
+  };
   const handleAddNewUser = async (e) => {
     const { clientX, clientY } = e;
     const left = Math.min(
@@ -195,42 +221,97 @@ export default function ProjectPage() {
     );
   }
 
+  const projectTitle = items?.length > 0 ? items[0].title : null;
+  const activityStatus =
+    items?.length > 0 && (items[0].isactive ? "Active" : "&#x200b;"); // zero width character, but technically different than ""
+  const field = items?.length > 0 ? items[0].name : "Loading...";
+  const description = items?.length > 0 ? items[0].description : null;
   return (
     <>
       <NavBar />
       {popup && <Popup {...popup} />}
       <div className="projecthead">
         <div className="projectheadmain">
-          <h1 className="specialtext">
-            {items?.length > 0 ? items[0].title : null}
-          </h1>
+          {editing ? (
+            <input
+              name="project_title"
+              className="input userfullname"
+              placeholder={projectTitle}
+              defaultValue={projectTitle}
+              onChange={handleDataChange}
+            />
+          ) : (
+            <h1 className="specialtext">{projectTitle}</h1>
+          )}
           <div>
-            <span>
-              {items?.length > 0
-                ? items[0].isactive
-                  ? "Active"
-                  : ""
-                : "Unable to load"}
-            </span>
-            <Field field="Computer Science" />
+            <div className="activity-stat">
+              {!editing ? (
+                activityStatus || "Unable to load"
+              ) : (
+                <select
+                  name="project_activity_status"
+                  className="input"
+                  defaultValue={activityStatus}
+                  onChange={handleDataChange}
+                >
+                  <option value="active">Active</option>
+                  <option value="&#x200b;" placeholder="Active">
+                    Inactive
+                  </option>
+                </select>
+              )}
+            </div>
+            {editing ? (
+              <SelectFields
+                name="project_field"
+                defaultValue={field}
+                onChange={handleDataChange}
+                placeholder={field}
+              />
+            ) : (
+              <Field field={field} />
+            )}
           </div>
-          <p>{items?.length > 0 ? items[0].description : null}</p>
+          {editing ? (
+            <textarea
+              name="project_description"
+              type="text"
+              rows="10"
+              cols="100"
+              className="input desc"
+              defaultValue={description}
+              placeholder={description}
+              onChange={handleDataChange}
+            />
+          ) : (
+            <p>{description}</p>
+          )}
         </div>
         <div className="projectheadother">
           <ul>{userList}</ul>
           {isUserAdmin ? (
             <div className="buttongroup">
-              <button className="button">
-                {" "}
+              <button className="button" onClick={handleEditProject}>
                 <div>
-                  <img src={editIcon} alt="" />
+                  <img src={editing ? checkmarkIcon : editIcon} alt="" />
                 </div>
-                Edit Project
+                {editing ? "Done" : "Edit Project"}
               </button>
-              <button className="delete button" onClick={handleDeleteProject}>
-                <img src={deleteIcon} />
-                Delete Project
-              </button>
+              {!editing ? (
+                <button className="delete button" onClick={handleDeleteProject}>
+                  <img src={deleteIcon} />
+                </button>
+              ) : (
+                <button
+                  className="button"
+                  onClick={() => {
+                    setEditing(false);
+                  }}
+                >
+                  <img src={crossIcon} />
+                  Cancel
+                </button>
+              )}
             </div>
           ) : null}
         </div>

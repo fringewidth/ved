@@ -16,6 +16,7 @@ export default function NavBar() {
       console.log(error);
     } else {
       navigate("/");
+      window.location.reload();
     }
   };
 

@@ -18,7 +18,7 @@ export default function Field(props) {
     <div className="circletext">
       <div
         className="circle"
-        style={{ backgroundColor: stringToColour(props.field.trim()) }}
+        style={{ backgroundColor: stringToColour(props.field.trim() || "") }}
       ></div>
       <div>{props.field}</div>
     </div>
