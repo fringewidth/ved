@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import NavBar from "./NavBar";
+import SelectFields from "./SelectFields";
 import { sessionContext } from "../contexts/SessionProvider";
 import { supabase } from "../utils/supabase";
 import { useNavigate } from "react-router-dom";
-
 
 export default function CreateProject(props) {
   const { session } = useContext(sessionContext);
@@ -83,15 +83,7 @@ export default function CreateProject(props) {
           name="project_description"
         />
         <h1>Field</h1>
-        <select
-          className="input"
-          name="project_field"
-          onChange={handleDataChange}
-        >
-          {fields.map((field) => (
-            <option value={field}>{field}</option>
-          ))}
-        </select>
+        <SelectFields name="project_field" onChange={handleDataChange} />
         <br />
         <button
           className="button"
