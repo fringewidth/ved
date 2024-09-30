@@ -15,7 +15,6 @@ import { sessionContext } from "../contexts/SessionProvider";
 
 export default function ProjectPage() {
   const { project_id } = useParams();
-
   const { session } = useContext(sessionContext);
 
   const searchBoxRef = useRef(null);
@@ -32,13 +31,19 @@ export default function ProjectPage() {
   const [error, setError] = useState(null);
   const [showUserSearch, setShowUserSearch] = useState(false);
   const [searchPosition, setSearchPosition] = useState({ left: 0, top: 0 });
-  const [selected, setSelected] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [popup, setPopup] = useState(null);
   const [editing, setEditing] = useState(false);
   const [inputs, setInputs] = useState(initialInputs);
 
   const SEARCH_BOX_HEIGHT = 24;
   const SEARCH_BOX_WIDTH = 20;
+
+  const projectTitle = items?.length > 0 ? items[0].title : null;
+  const activityStatus =
+    items?.length > 0 && (items[0].isactive ? "Active" : "Inactive");
+  const field = items?.length > 0 ? items[0].name : "Loading...";
+  const description = items?.length > 0 ? items[0].description : null;
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -61,11 +66,11 @@ export default function ProjectPage() {
   }, []);
 
   const addContributor = async () => {
-    if (selected) {
+    if (selectedUser) {
       const { error } = await supabase.rpc(
         "add_contributor",
         {
-          username_arg: selected,
+          username_arg: selectedUser,
           project_id_arg: project_id.slice(1),
         },
         { returnType: "void" }
@@ -79,7 +84,7 @@ export default function ProjectPage() {
 
   useEffect(() => {
     addContributor();
-  }, [selected]);
+  }, [selectedUser]);
 
   useEffect(() => {
     getItems();
@@ -105,12 +110,17 @@ export default function ProjectPage() {
       setError(error);
     }
   };
-  console.log(inputs);
 
   const handleDataChange = (e) => {
+    const value =
+      e.target.type === "select-one"
+        ? e.target.value
+        : e.target.value === ""
+        ? e.target.placeholder
+        : e.target.value;
     setInputs({
       ...inputs,
-      [e.target.name]: e.target.value,
+      [e.target.name]: value,
     });
     if (e.target.value !== e.target.placeholder && e.target.value !== "") {
       e.target.style.borderColor = "green";
@@ -195,6 +205,29 @@ export default function ProjectPage() {
   const handleEditProject = () => {
     setEditing(!editing);
   };
+
+  const handleSubmit = async () => {
+    inputs.project_activity_status =
+      inputs.project_activity_status === ""
+        ? activityStatus === "Active"
+        : inputs.project_activity_status === "active";
+    inputs.project_field =
+      inputs.project_field === "" ? field : inputs.project_field;
+    inputs.project_title = inputs.project_title || projectTitle;
+    inputs.project_description = inputs.project_description || description;
+
+    const { error } = await supabase.rpc("edit_project", {
+      project_id_arg: project_id.slice(1),
+      isactive_arg: inputs.project_activity_status,
+      field_arg: inputs.project_field,
+      title_arg: inputs.project_title,
+      description_arg: inputs.project_description,
+    });
+    if (error) {
+      console.log(error);
+    }
+    window.location.reload();
+  };
   const handleAddNewUser = async (e) => {
     const { clientX, clientY } = e;
     const left = Math.min(
@@ -221,11 +254,6 @@ export default function ProjectPage() {
     );
   }
 
-  const projectTitle = items?.length > 0 ? items[0].title : null;
-  const activityStatus =
-    items?.length > 0 && (items[0].isactive ? "Active" : "&#x200b;"); // zero width character, but technically different than ""
-  const field = items?.length > 0 ? items[0].name : "Loading...";
-  const description = items?.length > 0 ? items[0].description : null;
   return (
     <>
       <NavBar />
@@ -251,11 +279,18 @@ export default function ProjectPage() {
                 <select
                   name="project_activity_status"
                   className="input"
-                  defaultValue={activityStatus}
                   onChange={handleDataChange}
                 >
-                  <option value="active">Active</option>
-                  <option value="&#x200b;" placeholder="Active">
+                  <option
+                    value="active"
+                    selected={activityStatus === "active" ? "selected" : ""}
+                  >
+                    Active
+                  </option>
+                  <option
+                    value="Inactive"
+                    selected={activityStatus !== "active" ? "selected" : ""}
+                  >
                     Inactive
                   </option>
                 </select>
@@ -291,7 +326,10 @@ export default function ProjectPage() {
           <ul>{userList}</ul>
           {isUserAdmin ? (
             <div className="buttongroup">
-              <button className="button" onClick={handleEditProject}>
+              <button
+                className="button"
+                onClick={editing ? handleSubmit : handleEditProject}
+              >
                 <div>
                   <img src={editing ? checkmarkIcon : editIcon} alt="" />
                 </div>
@@ -336,7 +374,7 @@ export default function ProjectPage() {
         >
           <UserSearch
             setShowUserSearch={setShowUserSearch}
-            setSelected={setSelected}
+            setSelected={setSelectedUser}
           />
         </div>
       )}
