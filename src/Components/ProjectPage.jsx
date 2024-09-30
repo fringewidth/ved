@@ -7,10 +7,8 @@ import Field from "./Field";
 import ProjectList from "./ProjectList";
 import UserSearch from "./UserSearch";
 import Popup from "./Popup";
-import { getSupabase } from "../utils/supabaseClient";
+import { supabase } from "../utils/supabase";
 import { sessionContext } from "../contexts/SessionProvider";
-
-const supabase = getSupabase();
 
 export default function ProjectPage() {
   const { project_id } = useParams();
@@ -27,6 +25,7 @@ export default function ProjectPage() {
   const [searchPosition, setSearchPosition] = useState({ left: 0, top: 0 });
   const [selected, setSelected] = useState(null);
   const [popup, setPopup] = useState(null);
+  const [editing, setEditing] = useState(true);
 
   const SEARCH_BOX_HEIGHT = 24;
   const SEARCH_BOX_WIDTH = 20;

@@ -1,12 +1,10 @@
 import { useContext } from "react";
-import { getSupabase } from "../utils/supabaseClient";
+import { supabase } from "../utils/supabase";
 import { useNavigate, Link } from "react-router-dom";
 import { sessionContext } from "../contexts/SessionProvider";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import BlueButton from "./BlueButton";
-
-const supabase = getSupabase();
 
 export default function NavBar() {
   const { session } = useContext(sessionContext);

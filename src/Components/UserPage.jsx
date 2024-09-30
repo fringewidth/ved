@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { getSupabase } from "../utils/supabaseClient";
 import { sessionContext } from "../contexts/SessionProvider";
+import { supabase } from "../utils/supabase";
 import UserList from "./UserList";
 import NavBar from "./NavBar";
 import Field from "./Field";
 import calendar from "../assets/svg/calendar.svg";
 import pin from "../assets/svg/pin.svg";
-
-const supabase = getSupabase();
 
 const initialInputs = {
   fullName: "",

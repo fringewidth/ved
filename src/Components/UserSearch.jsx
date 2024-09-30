@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getSupabase } from "../utils/supabaseClient";
-
-const supabase = getSupabase();
+import { supabase } from "../utils/supabase";
 
 export default function UserSearch(props) {
   const [data, setData] = useState([]);

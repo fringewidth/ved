@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getSupabase } from "../utils/supabaseClient";
+import { supabase } from "../utils/supabase";
 
-const supabase = getSupabase();
 const sessionContext = React.createContext();
 
 // Provides user session information to the app

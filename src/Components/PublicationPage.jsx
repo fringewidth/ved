@@ -1,6 +1,5 @@
 import React from "react";
 import NavBar from "./NavBar";
-import { createClient } from "@supabase/supabase-js/dist/module";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -8,11 +7,7 @@ import BlueButton from "./BlueButton";
 import document from "../assets/svg/document.svg";
 import info from "../assets/svg/info.svg";
 import link from "../assets/svg/link.svg";
-
-const supabaseUrl = "https://txouxmylhwoxcyciynby.supabase.co";
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
-
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from "../utils/supabase";
 
 export default function PublicationPage() {
   const { publication_id } = useParams();

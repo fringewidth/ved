@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import { sessionContext } from "../contexts/SessionProvider";
-import { getSupabase } from "../utils/supabaseClient";
+import { supabase } from "../utils/supabase";
 import { useNavigate } from "react-router-dom";
 
-const supabase = getSupabase();
 
 export default function CreateProject(props) {
   const { session } = useContext(sessionContext);

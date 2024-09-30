@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { getSupabase } from "../utils/supabaseClient";
+import { supabase } from "../utils/supabase";
 import { sessionContext } from "../contexts/SessionProvider";
 import HorizontalList from "./HorizontalList.jsx";
-
-const supabase = getSupabase();
 
 export default function UserList(props) {
   const [items, setItems] = useState([]);

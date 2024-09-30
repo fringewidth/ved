@@ -1,9 +1,8 @@
 //Sorts by citations and returns top objects. Objects specified by props.
 
 import HorizontalList from "./HorizontalList.jsx";
-import { getSupabase } from "../utils/supabaseClient";
+import { supabase } from "../utils/supabase";
 
-const supabase = getSupabase();
 import { useState, useEffect } from "react";
 
 export default function TopProjects(props) {

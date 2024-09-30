@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import HorizontalList from "./HorizontalList";
-import { getSupabase } from "../utils/supabaseClient";
+import { supabase } from "../utils/supabase";
 import { sessionContext } from "../contexts/SessionProvider";
-
-const supabase = getSupabase();
 
 export default function ProjectList(props) {
   const { session } = useContext(sessionContext);

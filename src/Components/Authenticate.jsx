@@ -1,13 +1,11 @@
 import React from "react";
-import { getSupabase } from "../utils/supabaseClient";
+import { supabase } from "../utils/supabase";
 import NavBar from "./NavBar";
 import { useParams } from "react-router-dom";
 import authPageAnimation from "../assets/video/auth-page-animation2.mp4";
 import { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { sessionContext } from "../contexts/SessionProvider";
-
-const supabase = getSupabase();
 
 const initialInputs = { email: "", password: "" };
 
