@@ -7,14 +7,6 @@ const sessionContext = React.createContext();
 export default function SessionProvider({ children }) {
   const [session, setSession] = useState(null);
   useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-      }
-    );
-  }, []);
-
-  useEffect(() => {
     const getUsernameFromEmail = async (email) => {
       const { data, error } = await supabase
         .from("researchers")
@@ -25,8 +17,15 @@ export default function SessionProvider({ children }) {
         setSession({ ...session, username: data[0].username });
       }
     };
-    getUsernameFromEmail(session?.user.email);
-  }, [session]);
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        setSession(session);
+      }
+    );
+
+    if (session && session.user && !session.user.username)
+      getUsernameFromEmail(session?.user.email);
+  }, []);
 
   return (
     <sessionContext.Provider value={{ session, setSession }}>
