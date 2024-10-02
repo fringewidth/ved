@@ -210,7 +210,7 @@ export default function ProjectPage() {
     inputs.project_activity_status =
       inputs.project_activity_status === ""
         ? activityStatus === "Active"
-        : inputs.project_activity_status === "active";
+        : inputs.project_activity_status === "Active";
     inputs.project_field =
       inputs.project_field === "" ? field : inputs.project_field;
     inputs.project_title = inputs.project_title || projectTitle;
@@ -280,16 +280,17 @@ export default function ProjectPage() {
                   name="project_activity_status"
                   className="input"
                   onChange={handleDataChange}
+                  defaultValue={activityStatus}
                 >
                   <option
-                    value="active"
-                    selected={activityStatus === "active" ? "selected" : ""}
+                    value="Active"
+                    selected={activityStatus === "Active" ? "selected" : ""}
                   >
                     Active
                   </option>
                   <option
                     value="Inactive"
-                    selected={activityStatus !== "active" ? "selected" : ""}
+                    selected={activityStatus !== "Active" ? "selected" : ""}
                   >
                     Inactive
                   </option>
