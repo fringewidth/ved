@@ -17,10 +17,20 @@ const initialInputs = {
   publications: "",
 };
 
+const changed = {
+  fullName: false,
+  affl: false,
+  bio: false,
+  city: false,
+  yoe: false,
+  publications: false,
+};
+
 export default function UserPage() {
   const [editing, setEditing] = useState(false);
   const [inputs, setInputs] = useState(initialInputs);
   const [data, setData] = useState([]);
+  const [changedInputs, setChangedInputs] = useState(changed);
   const { username } = useParams();
   const { session } = useContext(sessionContext);
 
@@ -53,35 +63,46 @@ export default function UserPage() {
     });
     if (e.target.value !== e.target.placeholder && e.target.value !== "") {
       e.target.style.borderColor = "green";
+      changedInputs[e.target.name] = true;
     } else {
       e.target.style.borderColor = "white";
+      changedInputs[e.target.name] = false;
     }
   };
 
   const handleSubmit = async () => {
-    const full_name = inputs.fullName || (data.length > 0 && data[0].full_name);
-    const affiliation = inputs.affl || (data.length > 0 && data[0].affiliation);
-    const bio = inputs.bio || (data.length > 0 && data[0].bio);
-    const city = inputs.city || (data.length > 0 && data[0].city);
-    const yoe = inputs.yoe || (data.length > 0 && data[0].yoe);
-    const names = full_name.split(" ");
-    const first_name = names[0];
-    const last_name = names[names.length - 1] || "";
-    const middle_name = names.length === 2 ? "" : names[1];
-    setEditing(!editing);
-    const { data: success, error } = await supabase.rpc("update_user_info", {
-      username_arg: username.slice(1),
-      first_name_arg: first_name,
-      middle_name_arg: middle_name,
-      last_name_arg: last_name,
-      affiliation_arg: affiliation,
-      bio_arg: bio,
-      city_arg: city,
-      yoe_arg: yoe,
-      user_email_arg: session.user.email,
-    });
+    if (Object.values(changedInputs).some((inputChanged) => inputChanged)) {
+      const updatedData = {
+        full_name: inputs.fullName || (data.length > 0 && data[0].full_name),
+        affiliation: inputs.affl || (data.length > 0 && data[0].affiliation),
+        bio: inputs.bio || (data.length > 0 && data[0].bio),
+        city: inputs.city || (data.length > 0 && data[0].city),
+        yoe: inputs.yoe || (data.length > 0 && data[0].yoe),
+      };
 
-    window.location.reload();
+      const names = updatedData.full_name.split(" ");
+      const first_name = names[0];
+      const last_name = names.length > 1 ? names[names.length - 1] : "";
+      const middle_name = names.length > 2 ? names.slice(1, -1).join(" ") : "";
+
+      try {
+        await supabase.rpc("update_user_info", {
+          username_arg: username.slice(1),
+          first_name_arg: first_name,
+          middle_name_arg: middle_name,
+          last_name_arg: last_name,
+          affiliation_arg: updatedData.affiliation,
+          bio_arg: updatedData.bio,
+          city_arg: updatedData.city,
+          yoe_arg: updatedData.yoe,
+          user_email_arg: session.user.email,
+        });
+        window.location.reload();
+      } catch (error) {
+        console.error("Error updating user info:", error);
+      }
+    }
+    setEditing(false);
   };
 
   const icons = [pin, calendar, null, null, null];
