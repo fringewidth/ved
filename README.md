@@ -1,4 +1,6 @@
-![image](https://github.com/user-attachments/assets/09686853-42dd-477d-902e-cc273350b27d)
+
+[![YouTube Video](https://github.com/user-attachments/assets/09686853-42dd-477d-902e-cc273350b27d)](https://www.youtube.com/watch?v=FsQshAGo5vU)
+
 
 # Ved: A Website for Research Collaboration
 
