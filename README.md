@@ -1,4 +1,4 @@
-![Database Schema](DocsAssets/database-schema.png)
+![image](https://github.com/user-attachments/assets/09686853-42dd-477d-902e-cc273350b27d)
 
 # Ved: A Website for Research Collaboration
 
@@ -17,6 +17,9 @@ Ved is a student project aimed at promoting research collaboration. It is intend
 - CRUD operations are supported, allowing users to create new projects, view project details, update user information, and delete projects.
 - The application includes a search functionality, enabling users to easily find specific projects or other users.
 - There are over 100 fake users. (thanks Mistral)
+
+## DB Schema
+![Database Schema](DocsAssets/database-schema.png)
 
 ### Home Page
 
